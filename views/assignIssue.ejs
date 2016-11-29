@@ -1,0 +1,100 @@
+<% include partials/head %>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tasks manager</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/profile">My info</a></li>
+            <li><a href="/tasks">My issue</a></li>
+            <li class="active"><a href="/assign">Assign issue</a></li>
+            <li><a href="/">Exit</a></li>
+          </ul>          
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+         <!--<h1 class=" fa fa-user"></h1><br>-->
+        <!--<span><strong>user id</strong>: <%= user._id ? user._id : '' %></span><br>-->
+        <% if (user.local.email != null) { %>
+            <img src="https://avatars.io/gravatar/<%= user.local.email %>/100" class="small img-circle"><br>
+            <strong>email</strong>: <%= user.local.email %><br>            
+                                 
+          <% } %>          
+
+          <% if (user.google.id != null) { %>
+            <!--<h2 class="fa fa-google-plus"> Google</h2><br>-->
+            <img src="https://avatars.io/gravatar/<%= user.google.email %>/100" class="small img-circle"><br>                        
+            <strong>email</strong>: <%= user.google.email %><br>
+            <strong>name</strong>: <%= user.google.name %>
+          <% } %> 
+        <hr>
+          <ul class="nav nav-sidebar">            
+            <li><a href="/profile">My info</a></li>
+            <li><a href="/tasks">My issue</a></li>
+            <li class="active"><a href="/assign">Assign issue</a></li>
+            <li><a href="/">Exit</a></li>
+          </ul>          
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Assign issue</h1>                             
+       
+        <div class="col-sm-12 text-left">
+            
+            <form action="/setTask" method="post">    
+             <% if (user.local.email != null){var userEmail = user.local.email} 
+                if (user.google.id != null){ var userEmail = user.google.email} %>
+              <input type="hidden" name="from" value="<%=userEmail%>"> 
+              <p>From:</p>                                            
+               <input type="date" name="date_start">  
+               <br>
+               <br>
+               <p>To:</p>
+               <input type="date" name="date_end">               
+               <br>
+               <br>
+                <textarea class="form-control" name="textTask" rows="3" required></textarea>
+                <p>To:</p>
+                <select name="idUser" class="form-control" required>
+                <% for( var i = 0; i < users.length; i++){  %>
+                   
+                   <% 
+                    var idThisUser = users[i]._id;
+                    if(users[i].local.email){
+                         var emailThisUser = users[i].local.email                         
+                        }
+                       if(users[i].google.email){
+                          var emailThisUser = users[i].google.email
+                        }
+                    %>
+                    <option value="<%= idThisUser %>"><%= emailThisUser %></option>
+                        
+                <% } %>
+                
+                </select>
+                <br>
+                <button type="submit" class="btn btn-primary btn-lg">Set new task</button>                
+            </form> 
+        </div>
+        
+        </div>
+      </div>
+    </div>
+
+    
+    
+  </body>
+</html>

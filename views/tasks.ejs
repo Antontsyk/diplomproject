@@ -1,0 +1,110 @@
+<% include partials/head %>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tasks manager</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/profile">My info</a></li>
+            <li  class="active"><a href="/tasks">My issue</a></li>
+            <li><a href="/assign">Assign issue</a></li>
+            <li><a href="/">Exit</a></li>
+          </ul>          
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+         <!--<h1 class=" fa fa-user"></h1><br>-->
+        <!--<span><strong>user id</strong>: <%= user._id ? user._id : '' %></span><br>-->
+        <% if (user.local.email != null) { %>
+            <img src="https://avatars.io/gravatar/<%= user.local.email %>/100" class="small img-circle"><br>
+            <strong>email</strong>: <%= user.local.email %><br>            
+                                 
+          <% } %>          
+
+          <% if (user.google.id != null) { %>
+            <!--<h2 class="fa fa-google-plus"> Google</h2><br>-->
+            <img src="https://avatars.io/gravatar/<%= user.google.email %>/100" class="small img-circle"><br>                        
+            <strong>email</strong>: <%= user.google.email %><br>
+            <strong>name</strong>: <%= user.google.name %>
+          <% } %> 
+        <hr>
+          <ul class="nav nav-sidebar">            
+            <li><a href="/profile">My info</a></li>
+            <li class="active"><a href="/tasks">My issue</a></li>
+            <li><a href="/assign">Assign issue</a></li>
+            <li><a href="/">Exit</a></li>
+          </ul>          
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">MY ISSUE</h1>          
+           
+        
+                 
+            <table class="table table-condensed">
+            <tr>
+                <th>#</th>
+                <th>Issue</th>
+                <th>From</th>
+                <th>Date start</th>
+                <th>Date end</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            <% user.local.tasks.sort(function(a,b){ return a.status - b.status }) %>
+            <% for( var i = 0; i < user.local.tasks.length; i++){  %>           
+                <tr class="<% if(user.local.tasks[i].status == 0){ %>info<% }%><% if(user.local.tasks[i].status == 1){ %>success<% }%><% if(user.local.tasks[i].status == 2){ %>danger<% }%>">
+                    <td><b><%= i+1 %></b></td>
+                    <td><%= user.local.tasks[i].task %></td>
+                    <td><%= user.local.tasks[i].from %></td>
+                    <td><%= user.local.tasks[i].date_start %></td>
+                    <td><%= user.local.tasks[i].date_end %></td>
+                    <td>
+                        <% if(user.local.tasks[i].status == 0){ %> New <% }%>
+                        <% if(user.local.tasks[i].status == 1){ %> In progress <% }%>
+                        <% if(user.local.tasks[i].status == 2){ %> Finished! <% }%>
+                    </td>
+                    <td>                       
+                       <% if(user.local.tasks[i].status == 0){ %>
+                        <form action="/changestatus" method="post">
+                           <input type="hidden" name="idUser" value="<%= user._id%>">
+                           <input type="hidden" name="task_name" value="<%= user.local.tasks[i].task %>">
+                            <input type="hidden" name="status" value="1">
+                            <button type="submit" class="btn btn-success">start do</button>
+                        </form>                        
+                        <% }%>
+                        <% if(user.local.tasks[i].status == 1){ %>
+                        <form action="/changestatus" method="post">
+                          <input type="hidden" name="idUser" value="<%= user._id%>">
+                           <input type="hidden" name="task_name" value="<%= user.local.tasks[i].task %>">
+                            <input type="hidden" name="status" value="2">
+                            <button type="submit" class="btn btn-danger">end</button>
+                        </form>
+                        <% }%>                        
+                    </td>
+                </tr>
+            <% } %>
+            </table>
+        
+        
+        </div>
+      </div>
+    </div>
+
+    
+    
+  </body>
+</html>

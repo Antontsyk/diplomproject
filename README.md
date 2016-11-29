@@ -12,8 +12,8 @@ Authenticate locally or through Facebook, Twitter or Google.
 
 ## Installation
 
-* ` git clone https://github.com/danielgynn/express-authentication.git`
-* `cd express-authentication`
+* ` git clone https://github.com/Antontsyk/diplomproject`
+* `cd diplomproject`
 * `npm install`
 * You will need a Mongo instance running. In a new terminal window run `mongod`
 * `node app`

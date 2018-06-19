@@ -2,40 +2,85 @@
 <html>
 
 <head>
-    <title>Express Authentication</title>
-<!--    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="http://bootstrap-3.ru/dist/css/bootstrap.min.css">
-    <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <!-- load fontawesome -->
-    <link rel="stylesheet" href="http://bootstrap-3.ru/examples/dashboard/dashboard.css">
-    <!-- load fontawesome -->
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <meta charset="utf-8">
+    <title>Volvox - Responsive HTML5 Bootstrap Template</title>
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Volvox - Responsive HTML5 Template">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,700,800,900" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- Libs CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/streamline-icon.css" rel="stylesheet" />
+    <link href="css/v-nav-menu.css" rel="stylesheet" />
+    <link href="css/v-portfolio.css" rel="stylesheet" />
+    <link href="css/v-blog.css" rel="stylesheet" />
+    <link href="css/v-animation.css" rel="stylesheet" />
+    <link href="css/v-bg-stylish.css" rel="stylesheet" />
+    <link href="css/v-shortcodes.css" rel="stylesheet" />
+    <link href="css/theme-responsive.css" rel="stylesheet" />
+    <link href="plugins/owl-carousel/owl.theme.css" rel="stylesheet" />
+    <link href="plugins/owl-carousel/owl.carousel.css" rel="stylesheet" />
 
+    <!-- Current Page CSS -->
+    <link href="plugins/rs-plugin/css/settings.css" rel="stylesheet" />
+    <link href="plugins/rs-plugin/css/custom-captions.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom.css">
     <style>
-        body {
-            padding-top: 50px;
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
         }
-        
-        img {
-            width: 70px;
-            height: 70px;
+        /* Optional: Makes the sample page fill the window. */
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
-        
-        img.small {
-            display: block;
-            margin: 0 auto;
+
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
         }
-        
-        .fa-sign-out {
-            float: right;
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+        .pac-container {
+            font-family: Roboto;
+        }
+
+        #type-selector {
+            color: #fff;
+            background-color: #4d90fe;
+            padding: 5px 11px 0px 11px;
+        }
+
+        #type-selector label {
+            font-family: Roboto;
+            font-size: 13px;
+            font-weight: 300;
         }
     </style>
 </head>

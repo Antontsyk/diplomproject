@@ -5,20 +5,31 @@ var User = require('../models/user');
 
 
 router.get('/', function (req, res, next) {
-    res.render('index', {
-        title: 'Express'
+    User.find({}, function (err, users) {
+        res.render('index', {
+            user: req.user,
+            users: users,
+            title: 'Express'
+        });
     });
 });
 
 router.get('/login', function (req, res, next) {
-    res.render('login.ejs', {
-        message: req.flash('loginMessage')
+    User.find({}, function (err, users) {
+        res.render('login.ejs', {
+            user: req.user,
+            users: users,
+            message: req.flash('loginMessage'),
+            title: 'Login'
+        });
     });
 });
 
 router.get('/signup', function (req, res) {
     res.render('signup.ejs', {
-        message: req.flash('loginMessage')
+        user: req.user,
+        message: req.flash('loginMessage'),
+        title: 'signup'
     });
 });
 
@@ -55,13 +66,13 @@ router.get('/logout', function (req, res) {
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/signup',
     failureFlash: true,
 }));
 
 router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true,
 }));

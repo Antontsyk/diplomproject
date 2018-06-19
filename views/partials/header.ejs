@@ -1,0 +1,59 @@
+<div class="header-container">
+    <header class="header-top">
+        <div class="container">
+            <div class="header-top-info">
+
+            </div>
+            <% if (user != null) { %>
+            <nav class="header-top-menu std-menu">
+                <ul class="menu nav-pills nav-main">
+                    <li class="m-item"><a href="/logout">Выход</a></li>
+                </ul>
+            </nav>
+            <% } else {%>
+            <ul class="social-icons standard">
+                <li class="twitter"><a href="/auth/twitter" target="_blank"><i class="fa fa-twitter"></i><i class="fa fa-twitter"></i></a></li>
+                <li class="facebook"><a href="/auth/facebook" target="_blank"><i class="fa fa-facebook"></i><i class="fa fa-facebook"></i></a></li>
+                <li class="googleplus"><a href="/auth/google" target="_blank"><i class="fa fa-google-plus"></i><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+            <nav class="header-top-menu std-menu">
+                <ul class="menu nav-pills nav-main">
+                    <li class="m-item"><a href="/login">Вход</a></li>
+                    <li class="m-item"><a href="/signup">Регистрация</a></li>
+                </ul>
+            </nav>
+            <% } %>
+        </div>
+    </header>
+    <header class="header fixed clearfix">
+        <div class="container">
+
+            <!--Site Logo-->
+            <div class="logo" data-sticky-logo="img/logo-white.png" data-normal-logo="img/logo.png">
+                <a href="/">
+                    <img style="height: 70px;" alt="Venue" src="img/logo.png">
+                </a>
+            </div>
+            <!--End Site Logo-->
+
+            <div class="navbar-collapse nav-main-collapse collapse">
+                <!--Main Menu-->
+                <nav class="nav-main mega-menu one-page-menu">
+                    <ul class="nav nav-pills nav-main" id="mainMenu">
+                        <li class="active">
+                            <a data-hash href="/"><i class="fa fa-home"></i>Home</a>
+                        </li>
+                        <% if (user != null) { %>
+                        <li class="active">
+                            <a href="/logout"><i class="fa fa-home"></i>Exit</a>
+                        </li>
+                        <% } else {%>
+
+                        <% } %>
+                    </ul>
+                </nav>
+                <!--End Main Menu-->
+            </div>
+        </div>
+    </header>
+</div>

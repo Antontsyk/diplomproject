@@ -1,31 +1,95 @@
 <% include partials/head %>
+<body class="standard-browser">
 
-  <body>
-    <div class="col-sm-8 col-sm-offset-2">
-      <div class="jumbotron text-center">
-        <h1><span class="fa fa-sign-in"></span> Login</h1>
+<!--Header-->
+<% include partials/header.ejs %>
+<!--End Header-->
 
-        <% if (message != null) { %>
-        	<div class="alert-danger"><%= message %></div>
-        <% } %>
+<div id="container" class="v-bg-color">
 
-        <form action="/login" method="post">
-          <div class="form-group">
-              <label>Email</label>
-              <input type="text" class="form-control" name="email">
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password" />
-          </div>
-          <div>
-            <input type="submit" class="form-control" value="Submit" />
-          </div>
-        </form>
-      </div>
-      <hr>
-      <span class="fa fa-sign-in"> Don't have an account?<a href="/signup"> Signup</a></span>
-      <p>Or go <a href="/">home</a>.</p>
+  <div class="v-page-wrap no-top-spacing padding-50 body-sign">
+
+    <div class="container">
+      <div class="v-spacer col-sm-12 v-height-small"></div>
     </div>
-  </body>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm-5 col-sm-offset-1">
+
+          <p class="v-smash-text-large pull-top">
+            <span>Explain why it's best</span>
+          </p>
+          <div class="horizontal-break left"></div>
+
+          <ul class="v-list-v2">
+            <li class="v-animation" data-animation="fade-from-right" data-delay="150" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Simple &amp; with endless possibilties.</span></li>
+            <li class="v-animation" data-animation="fade-from-right" data-delay="300" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Everything is perfectly orgainized for future.</span></li>
+            <li class="v-animation" data-animation="fade-from-right" data-delay="450" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Sliders give you the opportunity to showcase.</span></li>
+            <li class="v-animation" data-animation="fade-from-right" data-delay="600" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Multiple layout for home pages, portfolio &amp; blog.</span></li>
+            <li class="v-animation" data-animation="fade-from-right" data-delay="750" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">The best way to grow your business</span></li>
+            <li class="v-animation" data-animation="fade-from-right" data-delay="900" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Lorem ipsum dolor sit amet, consectetur.</span></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-5">
+
+            <% if (message != null) { %>
+          <div class="alert-danger"><%= message %></div>
+            <% } %>
+
+          <form class="signup" action="/login" method="post">
+
+            <div class="form-group">
+              <label>Username <span class="required">*</span></label>
+              <input type="text" value="" placeholder="email" maxlength="100" class="form-control" name="email" id="email">
+            </div>
+            <div class="form-group">
+              <label>Password <span class="required">*</span></label>
+              <input type="password" value="" placeholder="Password" maxlength="100" class="form-control" name="password" id="password">
+            </div>
+
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="checkbox-custom checkbox-default">
+                  <input id="RememberMe" name="rememberme" type="checkbox">
+                  <label for="RememberMe">Remember Me</label>
+                </div>
+              </div>
+              <div class="col-sm-4 pull-right">
+                <button type="submit" class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">Sign In</button>
+              </div>
+            </div>
+
+            <span class="line-thru text-center text-uppercase pull-bottom-small pull-top-small">
+                                <span>or</span>
+                            </span>
+
+            <div class="mb-xs text-center">
+              <a class="btn btn-facebook">Connect with <i class="fa fa-facebook"></i></a>
+              <a class="btn btn-twitter">Connect with <i class="fa fa-twitter"></i></a>
+            </div>
+
+            <p class="text-center pull-top-small">
+              Don't have an account yet? <a class="v-link" href="#">Sign Up!</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="v-spacer col-sm-12 v-height-standard"></div>
+    </div>
+  </div>
+
+  <!--Footer-Wrap-->
+  <% include partials/footer.ejs %>
+  <!--End Footer-Wrap-->
+</div>
+<!-- Libs -->
+<% include partials/include_scripts.ejs %>
+<!-- Libs -->
+</body>
 </html>

@@ -1,18 +1,232 @@
 <% include partials/head %>
 
   <body>
-    <div class="col-sm-8 col-sm-offset-2">
-      <div class="jumbotron text-center">
-        <h1>Tasks Manager</h1>
-        <p class="lead">A simple authentication app built with express, node & passport.</p>
+<!--Header-->
+<% include partials/header.ejs %>
+<!--End Header-->
 
-        <a href="/login" class="btn btn-default btn-lg"><span class="fa fa-sign-in"></span> Login</a>
-        <a href="/signup" class="btn btn-default btn-lg"><span class="fa fa-user"></span> Signup</a>
-        <!--<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>-->
-        <!--<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>-->
-        <a href="/auth/google" class="btn btn-danger btn-lg"><span class="fa fa-google-plus"></span> Google</a>
+<div id="container" class="slideshow">
 
-      </div>      
+  <!--Set your own slider options. Look at the v_RevolutionSlider() function in 'theme-core.js' file to see options-->
+  <div class="fullwidthbanner-container" id="home">
+
+    <div
+            id="map"
+            data-bgposition="center top"
+            data-bgfit="cover"
+            data-bgrepeat="no-repeat"
+            style="width: 100%; height: 700px;"
+    >
+
     </div>
-  </body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <input id="pac-input" class="controls" type="text"
+                 placeholder="Введите место">
+          <div id="type-selector" class="controls">
+            <input type="radio" name="type" id="changetype-all" checked="checked">
+            <label for="changetype-all">Все</label>
+
+            <input type="radio" name="type" id="changetype-establishment">
+            <label for="changetype-establishment">Учреждения</label>
+
+            <input type="radio" name="type" id="changetype-address">
+            <label for="changetype-address">Адреса</label>
+
+            <input type="radio" name="type" id="changetype-geocode">
+            <label for="changetype-geocode">геокодов</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6col-xs-offset-3 center">
+          <h2>Выберите категорию</h2>
+        </div>
+        <div class="col-xs-6 col-xs-offset-3">
+          <select class="form-control"><option value="2">
+              Авто. Мото
+            </option><option value="3">
+              Бытовые услуги
+            </option><option value="4">
+              Еда
+            </option><option value="5">
+              Здоровье и спорт
+            </option><option value="6">
+              Интерьер
+            </option><option value="1">
+              Информационные технологии
+            </option><option value="7">
+              Коммерция
+            </option><option value="8">
+              Культура
+            </option><option value="9">
+              Логистика
+            </option><option value="10">
+              Мода и стиль
+            </option><option value="11">
+              Ноухау
+            </option><option value="12">
+              Образование
+            </option><option value="13">
+              Промышленное производство
+            </option><option value="14">
+              Развлечения. Отдых
+            </option><option value="15">
+              Сельское хозяйство
+            </option><option value="16">
+              Социальные проекты
+            </option><option value="17">
+              Строительство
+            </option><option value="18">
+              Туризм
+            </option><option value="19">
+              Финансы
+            </option><option value="20">
+              Экология
+            </option></select>
+        </div>
+        <button type="button" class="btn v-btn v-emerald">Сохранить</button>
+      </div>
+    </div>
+
+    <script>
+        // This example requires the Places library. Include the libraries=places
+        // parameter when you first load the API. For example:
+        // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+        var locations = [
+            {lat: -31.563910, lng: 147.154312},
+            {lat: -33.718234, lng: 150.363181},
+            {lat: -33.727111, lng: 150.371124},
+            {lat: -33.848588, lng: 151.209834},
+            {lat: -33.851702, lng: 151.216968},
+            {lat: -34.671264, lng: 150.863657},
+            {lat: -35.304724, lng: 148.662905},
+            {lat: -36.817685, lng: 175.699196},
+            {lat: -36.828611, lng: 175.790222},
+            {lat: -37.750000, lng: 145.116667},
+            {lat: -37.759859, lng: 145.128708},
+            {lat: -37.765015, lng: 145.133858},
+            {lat: -37.770104, lng: 145.143299},
+            {lat: -37.773700, lng: 145.145187},
+            {lat: -37.774785, lng: 145.137978},
+            {lat: -37.819616, lng: 144.968119},
+            {lat: -38.330766, lng: 144.695692},
+            {lat: -39.927193, lng: 175.053218},
+            {lat: -41.330162, lng: 174.865694},
+            {lat: -42.734358, lng: 147.439506},
+            {lat: -42.734358, lng: 147.501315},
+            {lat: -42.735258, lng: 147.438000},
+            {lat: -43.999792, lng: 170.463352}
+        ]
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -31.563910, lng: 147.154312},
+                zoom: 10
+            });
+            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var markers = locations.map(function(location, i) {
+                return new google.maps.Marker({
+                    position: location,
+                    label: labels[i % labels.length]
+                });
+            });
+
+            // Add a marker clusterer to manage the markers.
+            var markerCluster = new MarkerClusterer(map, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+            var input = /** @type {!HTMLInputElement} */(
+                document.getElementById('pac-input'));
+
+            var types = document.getElementById('type-selector');
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+
+            var infowindow = new google.maps.InfoWindow();
+            var marker = new google.maps.Marker({
+                map: map,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                infowindow.close();
+                marker.setVisible(false);
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                }
+
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);  // Why 17? Because it looks good.
+                }
+                marker.setIcon(/** @type {google.maps.Icon} */({
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(35, 35)
+                }));
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+
+                var address = '';
+                if (place.address_components) {
+                    console.log(place)
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+
+                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+                infowindow.open(map, marker);
+            });
+
+            // Sets a listener on a radio button to change the filter type on Places
+            // Autocomplete.
+            function setupClickListener(id, types) {
+                var radioButton = document.getElementById(id);
+                radioButton.addEventListener('click', function() {
+                    autocomplete.setTypes(types);
+                });
+            }
+
+            setupClickListener('changetype-all', []);
+            setupClickListener('changetype-address', ['address']);
+            setupClickListener('changetype-establishment', ['establishment']);
+            setupClickListener('changetype-geocode', ['geocode']);
+        }
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3k8FN3DKN0lL1-ryTKG-dnFO_KFxyi4&libraries=places&callback=initMap"
+            async defer></script>
+
+
+    <div class="shadow-right"></div>
+  </div>
+
+
+  <!--Footer-Wrap-->
+  <% include partials/footer.ejs %>>
+  <!--End Footer-Wrap-->
+</div>
+
+<!--// BACK TO TOP //-->
+<div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
+
+<!-- Libs -->
+<% include partials/include_scripts.ejs %>
+</body>
 </html>

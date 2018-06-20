@@ -1,10 +1,13 @@
 <div class="header-container">
     <header class="header-top">
         <div class="container">
-            <div class="header-top-info">
-
-            </div>
             <% if (user != null) { %>
+            <div class="header-top-info" style="float: left;">
+                <li><i class="fa fa-envelope-o"></i><strong>
+                        <%= user.local.email%>
+                        <%= user.google.email%>
+                    </strong></li>
+            </div>
             <nav class="header-top-menu std-menu">
                 <ul class="menu nav-pills nav-main">
                     <li class="m-item"><a href="/logout">Выход</a></li>

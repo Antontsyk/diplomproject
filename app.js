@@ -65,6 +65,27 @@ app.post('/setTask', function (req, res) {
     res.redirect('back');
 });
 
+app.post('/setLocation', function (req, res) {
+    var UserId = req.body.idUser;
+    var NewLocation = {
+        place: { lat: req.body.location_lat, lng: req.body.location_lng },
+        category: req.body.category
+    };
+    var user = '';
+
+    User.findById(UserId, function (err, user) {
+        user.local.locations.push(NewLocation);
+        user.save();
+        console.log(user.local.email);
+        user = (user);
+    });
+    //console.log(user.local.locations);
+    //res.status(200).send(user.local.locations)
+    //res.json(user.local.locations);
+    res.render('index.ejs');
+    res.redirect('back');
+});
+
 app.post('/changestatus', function (req, res) {
     var UserId = req.body.idUser;
     var status = req.body.status;

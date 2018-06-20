@@ -4,7 +4,6 @@
 <!--Header-->
 <% include partials/header.ejs %>
 <!--End Header-->
-
 <div id="container" class="slideshow">
 
   <!--Set your own slider options. Look at the v_RevolutionSlider() function in 'theme-core.js' file to see options-->
@@ -39,12 +38,18 @@
           </div>
         </div>
       </div>
-      <div class="row">
+          <% if (user != null) { %>
         <div class="col-xs-6col-xs-offset-3 center">
-          <h2>Выберите категорию</h2>
+            <h2>Выберите категорию</h2>
         </div>
+        <form id="setLocation">
         <div class="col-xs-6 col-xs-offset-3">
-          <select class="form-control"><option value="2">
+            <input type="hidden" name="idUser" value="<%= user._id ? user._id : '' %>">
+            <input type="hidden" name="location_lat" id="location_place_lat">
+            <input type="hidden" name="location_lng" id="location_place_lng">
+            <input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте">
+            <select class="form-control" id="category">
+                <option value="2">
               Авто. Мото
             </option><option value="3">
               Бытовые услуги
@@ -86,49 +91,95 @@
               Экология
             </option></select>
         </div>
-        <button type="button" class="btn v-btn v-emerald">Сохранить</button>
+        <button type="submit" class="btn v-btn v-emerald">Сохранить</button>
+      </form>
+          <% } else {%>
+          <div class="clo-xs-12 center">
+            <a href="/login" class="btn v-btn v-emerald">Войти чтобы оставить отметку</a>
+          </div>
+          <% } %>
       </div>
     </div>
-
+    <br>
+    <br>
+    <br>
     <script>
+
+        function selectCategoty(id) {
+            switch (Number(id)) {
+                case 1: return 'Информационные технологии'
+                    break;
+                case 2: return 'Авто. Мото'
+                    break;
+                case 3: return 'Бытовые услуги'
+                    break;
+                case 4: return 'Еда'
+                    break;
+                case 5: return 'Здоровье и спорт'
+                    break;
+                case 6: return 'Интерьер'
+                    break;
+                case 7: return 'Коммерция'
+                    break;
+                case 8: return 'Культура'
+                    break;
+                case 9: return 'Логистика'
+                    break;
+                case 10: return 'Мода и стиль'
+                    break;
+                case 11: return 'Ноухау'
+                    break;
+                case 12: return 'Образование'
+                    break;
+                case 13: return 'Промышленное производство'
+                    break;
+                case 14: return 'Развлечения. Отдых'
+                    break;
+                case 15: return 'Сельское хозяйство'
+                    break;
+                case 16: return 'Социальные проекты'
+                    break;
+                case 17: return 'Строительство'
+                    break;
+                case 18: return 'Туризм'
+                    break;
+                case 19: return 'Финансы'
+                    break;
+                case 20: return 'Экология'
+                    break;
+                default: return 'NOT'
+            }
+        }
         // This example requires the Places library. Include the libraries=places
         // parameter when you first load the API. For example:
         // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+        var locations = [];
+        <% if (user != null) { %>
+        <% if (user.local.locations != '') { %>
         var locations = [
-            {lat: -31.563910, lng: 147.154312},
-            {lat: -33.718234, lng: 150.363181},
-            {lat: -33.727111, lng: 150.371124},
-            {lat: -33.848588, lng: 151.209834},
-            {lat: -33.851702, lng: 151.216968},
-            {lat: -34.671264, lng: 150.863657},
-            {lat: -35.304724, lng: 148.662905},
-            {lat: -36.817685, lng: 175.699196},
-            {lat: -36.828611, lng: 175.790222},
-            {lat: -37.750000, lng: 145.116667},
-            {lat: -37.759859, lng: 145.128708},
-            {lat: -37.765015, lng: 145.133858},
-            {lat: -37.770104, lng: 145.143299},
-            {lat: -37.773700, lng: 145.145187},
-            {lat: -37.774785, lng: 145.137978},
-            {lat: -37.819616, lng: 144.968119},
-            {lat: -38.330766, lng: 144.695692},
-            {lat: -39.927193, lng: 175.053218},
-            {lat: -41.330162, lng: 174.865694},
-            {lat: -42.734358, lng: 147.439506},
-            {lat: -42.734358, lng: 147.501315},
-            {lat: -42.735258, lng: 147.438000},
-            {lat: -43.999792, lng: 170.463352}
-        ]
+            <% for( var i = 0; i < user.local.locations.length; i++){  %>
+             {
+                 category: '<%= user.local.locations[i].category %>',
+                 place: {
+                    lat: <%= user.local.locations[i].place.lat %>,
+                    lng: <%= user.local.locations[i].place.lng %>
+                }
+             },
+            <% }%>
+        ];
+        <% } %>
+        <% } %>
+        //var locations = JSON.parse(localStorage.pos);
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -31.563910, lng: 147.154312},
-                zoom: 10
+                center: {lat: 53.9085624, lng: 27.548442199999954},
+                zoom: 6
             });
             var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var markers = locations.map(function(location, i) {
+            var markers = locations.map(function( position , i) {
                 return new google.maps.Marker({
-                    position: location,
-                    label: labels[i % labels.length]
+                    position: position.place,
+                    label: selectCategoty(position.category)
                 });
             });
 
@@ -181,13 +232,20 @@
                 marker.setVisible(true);
 
                 var address = '';
+                //var location = JSON.parse(localStorage.pos);
+
                 if (place.address_components) {
-                    console.log(place)
                     address = [
                         (place.address_components[0] && place.address_components[0].short_name || ''),
                         (place.address_components[1] && place.address_components[1].short_name || ''),
                         (place.address_components[2] && place.address_components[2].short_name || '')
                     ].join(' ');
+                    //location.push(place)
+                    document.getElementById('location_map').value = address;
+                    document.getElementById('location_place_lat').value = place.geometry.location.lat();
+                    document.getElementById('location_place_lng').value = place.geometry.location.lng();
+
+                    //localStorage.setItem('pos', JSON.stringify(location) );
                 }
 
                 infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
@@ -228,5 +286,34 @@
 
 <!-- Libs -->
 <% include partials/include_scripts.ejs %>
+
+<script>
+    <% if (user != null) { %>
+  $('form[id=setLocation]').submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $.ajax({
+          type: 'POST',
+          url: '/setLocation',
+          data: {
+              idUser: '<%= user._id ? user._id : '' %>',
+              location_lat: document.getElementById('location_place_lat').value,
+              location_lng: document.getElementById('location_place_lng').value,
+              category: document.getElementById('category').value
+          },
+          success: function(data){
+              console.log(data);
+          },
+          error: function(data){
+              console.log(data);
+          }
+      });
+      location.href='/';
+  });
+
+  <% } %>
+
+</script>
 </body>
 </html>

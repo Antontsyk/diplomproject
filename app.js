@@ -80,10 +80,9 @@ app.post('/setLocation', function (req, res) {
         user = (user);
     });
     //console.log(user.local.locations);
-    //res.status(200).send(user.local.locations)
     //res.json(user.local.locations);
-    res.render('index.ejs');
-    res.redirect('back');
+    res.status(200).send('success');
+    //res.redirect('back');
 });
 
 app.post('/changestatus', function (req, res) {

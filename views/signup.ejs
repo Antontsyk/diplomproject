@@ -16,44 +16,27 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-sm-5 col-sm-offset-1">
-
-          <p class="v-smash-text-large pull-top">
-            <span>Explain why it's best</span>
-          </p>
-          <div class="horizontal-break left"></div>
-
-          <ul class="v-list-v2">
-            <li class="v-animation" data-animation="fade-from-right" data-delay="150" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Simple &amp; with endless possibilties.</span></li>
-            <li class="v-animation" data-animation="fade-from-right" data-delay="300" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Everything is perfectly orgainized for future.</span></li>
-            <li class="v-animation" data-animation="fade-from-right" data-delay="450" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Sliders give you the opportunity to showcase.</span></li>
-            <li class="v-animation" data-animation="fade-from-right" data-delay="600" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Multiple layout for home pages, portfolio &amp; blog.</span></li>
-            <li class="v-animation" data-animation="fade-from-right" data-delay="750" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">The best way to grow your business</span></li>
-            <li class="v-animation" data-animation="fade-from-right" data-delay="900" style="opacity: 1; right: 0px;"><i class="fa fa-check"></i><span class="v-lead">Lorem ipsum dolor sit amet, consectetur.</span></li>
-          </ul>
-        </div>
-
-        <div class="col-sm-5">
+        <div class="col-sm-12">
 
             <% if (message != null) { %>
           <div class="alert-danger"><%= message %></div>
             <% } %>
 
-          <form class="signup" action="/signup" method="post">
+          <form class="signup" action="/signup" method="post" style="margin: 0 auto;">
             <div class="form-group">
-              <label>E-mail Address <span class="required">*</span></label>
+              <label>E-mail <span class="required">*</span></label>
               <input type="email" value="" placeholder="E-mail Address" maxlength="100" class="form-control" name="email" id="email">
             </div>
 
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label>Password</label>
-                  <input name="password" type="password" placeholder="Password" class="form-control input-lg">
+                  <label>Пароль</label>
+                  <input name="password" type="password" placeholder="Пароль" class="form-control input-lg">
                 </div>
                 <div class="col-sm-6">
-                  <label>Password Confirm</label>
-                  <input name="password_confirm" placeholder="Password Confirm" type="password" class="form-control input-lg">
+                  <label>Повторите пароль</label>
+                  <input name="password_confirm" placeholder="Повторите пароль" type="password" class="form-control input-lg">
                 </div>
               </div>
             </div>
@@ -62,11 +45,11 @@
               <div class="col-sm-8">
                 <div class="checkbox-custom checkbox-default">
                   <input id="RememberMe" name="rememberme" type="checkbox">
-                  <label for="AgreeTerms">I agree with <a class="v-link" href="#">terms of use</a></label>
+                  <label for="AgreeTerms">Я согласен с <a class="v-link" href="#">правилами</a></label>
                 </div>
               </div>
               <div class="col-sm-4 pull-right">
-                <button type="submit" class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">Sign In</button>
+                <button type="submit" class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">Зарегистрировать</button>
               </div>
             </div>
 

@@ -1,0 +1,6 @@
+D:\Visual Studio\Venue\Venue\VenueClean\bin\VenueClean.dll
+D:\Visual Studio\Venue\Venue\VenueClean\bin\VenueClean.pdb
+D:\Visual Studio\Venue\Venue\VenueClean\obj\Debug\VenueClean.csprojResolveAssemblyReference.cache
+D:\Visual Studio\Venue\Venue\VenueClean\obj\Debug\VenueClean.dll
+D:\Visual Studio\Venue\Venue\VenueClean\obj\Debug\VenueClean.pdb
+D:\Visual Studio\Venue\Venue\VenueClean\bin\VenueClean.dll.config

@@ -174,6 +174,8 @@
     </div>
     <br>
     <br>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3k8FN3DKN0lL1-ryTKG-dnFO_KFxyi4&libraries=places"></script>
     <script>
 
         function selectCategoty(id) {
@@ -226,19 +228,6 @@
         // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
         var locations = [];
         <% if (user != null) { %>
-        <% if (user.local.locations != '') { %>
-        var locations = [
-            <% for( var i = 0; i < user.local.locations.length; i++){  %>
-             {
-                 category: '<%= user.local.locations[i].category %>',
-                 place: {
-                    lat: <%= user.local.locations[i].place.lat %>,
-                    lng: <%= user.local.locations[i].place.lng %>
-                }
-             },
-            <% }%>
-        ];
-        <% } %>
         <% } %>
         var All_locations = [
             <% for( var i = 0; i < users.length; i++){  %>
@@ -255,22 +244,19 @@
         ];
         //var locations = JSON.parse(localStorage.pos);
         var map;
+        function addMarker(location, category) {
+            var marker = new google.maps.Marker({
+                position: location,
+                label: selectCategoty(category),
+                map: map
+            });
+            markers.push(marker);
+        }
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 53.9085624, lng: 27.548442199999954},
                 zoom: 6
             });
-            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var markers = All_locations.map(function( position , i) {
-                return new google.maps.Marker({
-                    position: position.place,
-                    label: selectCategoty(position.category)
-                });
-            });
-
-            // Add a marker clusterer to manage the markers.
-            var markerCluster = new MarkerClusterer(map, markers,
-                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
             var input = /** @type {!HTMLInputElement} */(
                 document.getElementById('pac-input'));
@@ -351,11 +337,18 @@
             setupClickListener('changetype-establishment', ['establishment']);
             setupClickListener('changetype-geocode', ['geocode']);
         }
-    </script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3k8FN3DKN0lL1-ryTKG-dnFO_KFxyi4&libraries=places&callback=initMap"
-            async defer></script>
+        initMap();
+        var markers = All_locations.map(function( position , i) {
+            return new google.maps.Marker({
+                position: position.place,
+                label: selectCategoty(position.category)
+            });
+        });
 
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    </script>
 
     <div class="shadow-right"></div>
   </div>
@@ -383,6 +376,9 @@
             alert('Выберите месторасположение!');
         }else{
             $('#pac-input').removeClass('error');
+            var lat = Number(document.getElementById('location_place_lat').value);
+            var lng = Number(document.getElementById('location_place_lng').value);
+            var category = document.getElementById('category').value;
             $.ajax({
                 type: 'POST',
                 url: '/setLocation',
@@ -392,12 +388,14 @@
                 },
                 data: {
                     idUser: '<%= user._id ? user._id : '' %>',
-                    location_lat: document.getElementById('location_place_lat').value,
-                    location_lng: document.getElementById('location_place_lng').value,
-                    category: document.getElementById('category').value
+                    location_lat: lat,
+                    location_lng: lng,
+                    category: category
                 },
                 success: function(data){
                     console.log(data);
+                    addMarker({ lat: lat, lng: lng }, category);
+                    console.log({ lat: lat, lng: lng }, category);
                     map.setZoom(6);
                     alert('Ваша точка успешно добавлена!');
                 },

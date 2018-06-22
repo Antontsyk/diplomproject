@@ -68,6 +68,7 @@ app.post('/setTask', function (req, res) {
 app.post('/setLocation', function (req, res) {
     var UserId = req.body.idUser;
     var NewLocation = {
+        name: req.body.name,
         place: { lat: req.body.location_lat, lng: req.body.location_lng },
         category: req.body.category
     };

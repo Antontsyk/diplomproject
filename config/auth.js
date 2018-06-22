@@ -1,6 +1,6 @@
 module.exports = {
   facebookAuth: {
-    clientID: '896605267054808',
+    clientID: 'z',
     clientSecret: '28f6a7d2842d5f9ba19e449131694902',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
   },
@@ -10,8 +10,8 @@ module.exports = {
     callbackURL: 'http://localhost:3000/auth/twitter/callback',
   },
   googleAuth: {
-    clientID: '262575533252-sviar9bm39g5c4dnlb6erkpvjme4hit2.apps.googleusercontent.com',
-    clientSecret: '1K1fRgOmy1WJK4_Z8ycGRyuz',
+    clientID: '178160149789-l3skgd854aibp5vsc2ehuti69j6o8lrs.apps.googleusercontent.com',
+    clientSecret: 'l4KrwbrwEoS_FqWCmCExAn3x',
     callbackURL: 'http://localhost:3000/auth/google/callback',
   },
 };

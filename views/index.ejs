@@ -233,6 +233,7 @@
             <% for( var i = 0; i < users.length; i++){  %>
             <% for( var j=0; j < users[i].local.locations.length; j++) {  %>
             {
+                name: '<%= users[i].local.locations[j].name %>',
                 place: {
                     lat: <%= users[i].local.locations[j].place.lat %>,
                     lng: <%= users[i].local.locations[j].place.lng %>
@@ -244,14 +245,7 @@
         ];
         //var locations = JSON.parse(localStorage.pos);
         var map;
-        function addMarker(location, category) {
-            var marker = new google.maps.Marker({
-                position: location,
-                label: selectCategoty(category),
-                map: map
-            });
-            markers.push(marker);
-        }
+
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 53.9085624, lng: 27.548442199999954},
@@ -338,11 +332,51 @@
             setupClickListener('changetype-geocode', ['geocode']);
         }
         initMap();
+
+        var infoWindow = new google.maps.InfoWindow();
+
+        function addMarker(location, category) {
+            var marker = new google.maps.Marker({
+                position: location,
+                label: selectCategoty(category),
+                map: map
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker) {
+                return function() {
+                    infoWindow.setContent(selectCategoty(category));
+                    infoWindow.open(map, marker);
+                }
+            })(marker))
+            markers.push(marker);
+        }
+
+        function createContent( obj ){
+            var contentString = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">Название: '+obj.name+'</h1>'+
+                '<h2>Категория: '+selectCategoty(obj.category)+'</h2>'+
+                '<div id="bodyContent">'+
+                '<p>Описание: </p>'+
+                '</div>'+
+                '</div>';
+            return contentString;
+        }
+
         var markers = All_locations.map(function( position , i) {
             return new google.maps.Marker({
                 position: position.place,
                 label: selectCategoty(position.category)
             });
+        });
+
+        markers.map(function ( marker, i ) {
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infoWindow.setContent(createContent(All_locations[i]));
+                    infoWindow.open(map, marker);
+                }
+            })(marker, i));
         });
 
         // Add a marker clusterer to manage the markers.
@@ -379,6 +413,7 @@
             var lat = Number(document.getElementById('location_place_lat').value);
             var lng = Number(document.getElementById('location_place_lng').value);
             var category = document.getElementById('category').value;
+            var name = document.getElementById('name_location').value;
             $.ajax({
                 type: 'POST',
                 url: '/setLocation',
@@ -390,7 +425,8 @@
                     idUser: '<%= user._id ? user._id : '' %>',
                     location_lat: lat,
                     location_lng: lng,
-                    category: category
+                    category: category,
+                    name: name
                 },
                 success: function(data){
                     console.log(data);

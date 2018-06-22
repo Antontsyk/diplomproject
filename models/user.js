@@ -18,7 +18,6 @@ var userSchema = mongoose.Schema({
         username: String,
         infoadd: String,
         tasks: [],
-        locations: [],
     },
     twitter: {
         id: String,
@@ -27,7 +26,6 @@ var userSchema = mongoose.Schema({
         username: String,
         infoadd: String,
         tasks: [],
-        locations: [],
     },
     google: {
         id: String,
@@ -36,7 +34,6 @@ var userSchema = mongoose.Schema({
         name: String,
         infoadd: String,
         tasks: [],
-        locations: [],
     },
 });
 

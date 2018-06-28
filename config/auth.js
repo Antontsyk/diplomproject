@@ -12,6 +12,6 @@ module.exports = {
   googleAuth: {
     clientID: '178160149789-l3skgd854aibp5vsc2ehuti69j6o8lrs.apps.googleusercontent.com',
     clientSecret: 'l4KrwbrwEoS_FqWCmCExAn3x',
-    callbackURL: './auth/google/callback',
+    callbackURL: 'http://startupmap.by/auth/google/callback',
   },
 };

@@ -21,8 +21,6 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
-          <input id="pac-input" class="controls" type="text"
-                 placeholder="Введите место">
           <div id="type-selector" class="controls">
             <input type="radio" name="type" id="changetype-all" checked="checked">
             <label for="changetype-all">Все</label>
@@ -96,7 +94,9 @@
                                 </option></select>
                         </div>
                         <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
-                            <input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте" required>
+                            <!--<input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте" required>-->
+                            <input id="pac-input" class="form-control" type="text"
+                                   placeholder="Введите место" required>
                         </div>
                         <!--Toggle-->
                         <div class="col-sm-12">
@@ -275,7 +275,7 @@
                 document.getElementById('pac-input'));
 
             var types = document.getElementById('type-selector');
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            //map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(input);
             map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
             var autocomplete = new google.maps.places.Autocomplete(input);
@@ -325,7 +325,7 @@
                         (place.address_components[2] && place.address_components[2].short_name || '')
                     ].join(' ');
                     //location.push(place)
-                    document.getElementById('location_map').value = address;
+                    //document.getElementById('location_map').value = address;
                     document.getElementById('location_place_lat').value = place.geometry.location.lat();
                     document.getElementById('location_place_lng').value = place.geometry.location.lng();
 
@@ -537,7 +537,7 @@ var demo = new Vue({
   $('form[id=setLocation]').submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-        if(!$('#location_map').val()){
+        if(!$('#pac-input').val()){
             $('#pac-input').addClass('error');
             alert('Выберите месторасположение!');
         }else{

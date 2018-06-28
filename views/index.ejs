@@ -489,10 +489,19 @@ Vue.component('demo-grid', {
          nameArray.push(elem.name);
       });
 
-      markers.map(function ( marker, i ) {
-          var view = (nameArray.indexOf(marker.label) != -1) ? true : false;
-          marker.setVisible( view );
-      })
+      var markersFilterArray = [];
+
+        markerCluster.clearMarkers();
+        markers.map(function ( marker, i ) {
+            var view = (nameArray.indexOf(marker.label) != -1) ? true : false;
+            marker.setVisible( view );
+            if( view ){
+                markersFilterArray.push(marker);
+            }
+        });
+
+        markerCluster.addMarkers(markersFilterArray);
+
       return data
     }
   },

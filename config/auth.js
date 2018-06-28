@@ -10,8 +10,8 @@ module.exports = {
     callbackURL: 'http://localhost:3000/auth/twitter/callback',
   },
   googleAuth: {
-    clientID: '178160149789-l3skgd854aibp5vsc2ehuti69j6o8lrs.apps.googleusercontent.com',
-    clientSecret: 'l4KrwbrwEoS_FqWCmCExAn3x',
-    callbackURL: 'http://startupmap.by/auth/google/callback',
-  },
+    clientID: '355932575329-0g7ot371p59ap77211buh5gvicbrdnqa.apps.googleusercontent.com',
+    clientSecret: 'TYFez7-wml9EuD7AjK789uIk',
+    callbackURL: '/auth/google/callback',
+  }
 };

@@ -1,7 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var User = require('../models/user');
 var configAuth = require('./auth');
 
@@ -125,8 +125,13 @@ module.exports = function(passport) {
     clientID: configAuth.googleAuth.clientID,
     clientSecret: configAuth.googleAuth.clientSecret,
     callbackURL: configAuth.googleAuth.callbackURL,
+    passReqToCallback   : true,
+    enableProof: false,
+    session: false,
   },
-    function(token, refreshToken, profile, done) {
+    function(req, token, refreshToken, profile, done) {
+      console.log( 'profile' );
+      console.log( profile );
       process.nextTick(function() {
         User.findOne({ 'google.id': profile.id }, function(err, user) {
           if (err)

@@ -98,9 +98,10 @@ router.get('/auth/google', passport.authenticate('google', {
 }));
 
 router.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/',
-}));
+        failureRedirect: '/login' 
+    }), function (req, res) {
+    res.redirect('/');
+});
 
 module.exports = router;
 

@@ -19,23 +19,6 @@
 
     </div>
     <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <div id="type-selector" class="controls">
-            <input type="radio" name="type" id="changetype-all" checked="checked">
-            <label for="changetype-all">Все</label>
-
-            <input type="radio" name="type" id="changetype-establishment">
-            <label for="changetype-establishment">Учреждения</label>
-
-            <input type="radio" name="type" id="changetype-address">
-            <label for="changetype-address">Адреса</label>
-
-            <input type="radio" name="type" id="changetype-geocode">
-            <label for="changetype-geocode">геокодов</label>
-          </div>
-        </div>
-      </div>
           <% if (user != null) { %>
         <br>
         <form id="setLocation">
@@ -144,7 +127,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-xs-12 p-y-xs">
-                                                    <textarea class="form-control" rows="3" id="textareaDefault" placeholder="От себя..."></textarea>
+                                                    <textarea class="form-control" rows="3" id="textareaDefault" placeholder="От себя..." maxlength="333"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,10 +257,6 @@
             var input = /** @type {!HTMLInputElement} */(
                 document.getElementById('pac-input'));
 
-            var types = document.getElementById('type-selector');
-            //map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(input);
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
-
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo('bounds', map);
 
@@ -337,18 +316,6 @@
             });
 
             // Sets a listener on a radio button to change the filter type on Places
-            // Autocomplete.
-            function setupClickListener(id, types) {
-                var radioButton = document.getElementById(id);
-                radioButton.addEventListener('click', function() {
-                    autocomplete.setTypes(types);
-                });
-            }
-
-            setupClickListener('changetype-all', []);
-            setupClickListener('changetype-address', ['address']);
-            setupClickListener('changetype-establishment', ['establishment']);
-            setupClickListener('changetype-geocode', ['geocode']);
         }
         initMap();
 
@@ -375,9 +342,6 @@
                 '</div>'+
                 '<h1 id="firstHeading" class="firstHeading">Название: '+obj.name+'</h1>'+
                 '<h2>Категория: '+selectCategoty(obj.category)+'</h2>'+
-                '<div id="bodyContent">'+
-                '<p>Описание: </p>'+
-                '</div>'+
                 '</div>';
             return contentString;
         }

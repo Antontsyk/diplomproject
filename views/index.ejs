@@ -21,68 +21,73 @@
     <div class="container">
           <% if (user != null) { %>
         <br>
-        <form id="setLocation">
-            <input type="hidden" name="idUser" value="<%= user._id ? user._id : '' %>">
-            <input type="hidden" name="location_lat" id="location_place_lat">
-            <input type="hidden" name="location_lng" id="location_place_lng">
+
+
             <div class="row">
-                <div class="col-md-9">
-                    <div class="row">
-                        <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
-                            <input type="text" name="name" class="form-control" id="name_location" placeholder="Название">
-                        </div>
-                        <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
-                            <select class="form-control" id="category" required>
-                                <option value="" disabled selected hidden>Категория</option>
-                                <option value="2">
-                                    Авто. Мото
-                                </option><option value="3">
-                                    Бытовые услуги
-                                </option><option value="4">
-                                    Еда
-                                </option><option value="5">
-                                    Здоровье и спорт
-                                </option><option value="6">
-                                    Интерьер
-                                </option><option value="1">
-                                    Информационные технологии
-                                </option><option value="7">
-                                    Коммерция
-                                </option><option value="8">
-                                    Культура
-                                </option><option value="9">
-                                    Логистика
-                                </option><option value="10">
-                                    Мода и стиль
-                                </option><option value="11">
-                                    Ноухау
-                                </option><option value="12">
-                                    Образование
-                                </option><option value="13">
-                                    Промышленное производство
-                                </option><option value="14">
-                                    Развлечения. Отдых
-                                </option><option value="15">
-                                    Сельское хозяйство
-                                </option><option value="16">
-                                    Социальные проекты
-                                </option><option value="17">
-                                    Строительство
-                                </option><option value="18">
-                                    Туризм
-                                </option><option value="19">
-                                    Финансы
-                                </option><option value="20">
-                                    Экология
-                                </option></select>
-                        </div>
-                        <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
-                            <!--<input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте" required>-->
-                            <input id="pac-input" class="form-control" type="text"
-                                   placeholder="Введите место" required>
-                        </div>
-                        <!--Toggle-->
-                        <div class="col-sm-12">
+                <form id="setLocation" v-on:submit.prevent="setPoint" @keyup.enter="return_null">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
+                                <input type="hidden" name="idUser" value="<%= user._id ? user._id : '' %>" id="idUser">
+                                <input type="hidden" name="location_lat" id="location_place_lat">
+                                <input type="hidden" name="location_lng" id="location_place_lng">
+                                {{ form_data.lat }}
+
+                                <input type="text" name="name" class="form-control" id="name_location" placeholder="Название" v-model="form_data.name">
+                            </div>
+                            <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
+                                {{ form_data.category }}
+                                <select class="form-control" id="category" required  v-model="form_data.category">
+                                    <option value="" disabled selected hidden>Категория</option>
+                                    <option value="2">
+                                        Авто. Мото
+                                    </option><option value="3">
+                                        Бытовые услуги
+                                    </option><option value="4">
+                                        Еда
+                                    </option><option value="5">
+                                        Здоровье и спорт
+                                    </option><option value="6">
+                                        Интерьер
+                                    </option><option value="1">
+                                        Информационные технологии
+                                    </option><option value="7">
+                                        Коммерция
+                                    </option><option value="8">
+                                        Культура
+                                    </option><option value="9">
+                                        Логистика
+                                    </option><option value="10">
+                                        Мода и стиль
+                                    </option><option value="11">
+                                        Ноухау
+                                    </option><option value="12">
+                                        Образование
+                                    </option><option value="13">
+                                        Промышленное производство
+                                    </option><option value="14">
+                                        Развлечения. Отдых
+                                    </option><option value="15">
+                                        Сельское хозяйство
+                                    </option><option value="16">
+                                        Социальные проекты
+                                    </option><option value="17">
+                                        Строительство
+                                    </option><option value="18">
+                                        Туризм
+                                    </option><option value="19">
+                                        Финансы
+                                    </option><option value="20">
+                                        Экология
+                                    </option></select>
+                            </div>
+                            <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
+                                <!--<input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте" required>-->
+                                <input id="pac-input" class="form-control" type="text"
+                                       placeholder="Введите место" required>
+                            </div>
+                            <!--Toggle-->
+                            <div class="col-sm-12">
                                 <div class="v-heading-v2">
                                     <h3>Заполните ещё немного</h3>
                                 </div>
@@ -100,7 +105,7 @@
                                         <div id="collapseOnex" class="accordion-body collapse">
                                             <div class="panel-body">
                                                 <div class="p-y-xs col-sm-6 col-xs-12">
-                                                    <select class="form-control">
+                                                    <select class="form-control" v-model="form_data.count_osnovatelei">
                                                         <option value="" disabled selected hidden>Кол-во основателей</option>
                                                         <option>2</option>
                                                         <option>3</option>
@@ -109,7 +114,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="p-y-xs col-sm-6 col-xs-12">
-                                                    <select class="form-control">
+                                                    <select class="form-control"  v-model="form_data.step_project">
                                                         <option value="" disabled selected hidden>Стадия проекта</option>
                                                         <option>Идея</option>
                                                         <option>MVP\Beta</option>
@@ -119,7 +124,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="p-y-xs col-sm-6 col-xs-12">
-                                                    <select class="form-control">
+                                                    <select class="form-control"  v-model="form_data.need">
                                                         <option value="" disabled selected hidden>Что требуется</option>
                                                         <option>Деньги</option>
                                                         <option>Экспертиза</option>
@@ -128,28 +133,94 @@
                                                     </select>
                                                 </div>
                                                 <div class="p-y-xs col-sm-6 col-xs-12">
-                                                    <input type="text" id="website" name="website" class="form-control" placeholder="website">
+                                                    <input type="text" id="website" name="website" class="form-control" placeholder="website"  v-model="form_data.website">
                                                 </div>
                                                 <div class="col-xs-12 p-y-xs">
-                                                    <textarea class="form-control" rows="3" id="textareaDefault" placeholder="От себя..." maxlength="333"></textarea>
+                                                    <textarea class="form-control" rows="3" id="textareaDefault" placeholder="От себя..." maxlength="300"  v-model="form_data.dop_text"></textarea>
+                                                    <span class="grey">{{ form_data.dop_text.length }} из 300 символов</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <!--End Toggle-->
+                            <!--End Toggle-->
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3 p-y-xs">
-                    <button type="submit" class="btn v-btn v-emerald btn-block">Сохранить</button>
-                </div>
+                    <div class="col-md-3 p-y-xs">
+                        <button type="submit" class="btn v-btn v-emerald btn-block">Сохранить</button>
+                    </div>
+                </form>
             </div>
 
+        <script>
+            var formPoints = new Vue({
+                el: '#setLocation',
+                data: {
+                    form_data: {
+                        category: '',
+                        name: '',
+                        count_osnovatelei: '',
+                        step_project: '',
+                        need: '',
+                        website: '',
+                        dop_text: ''
+                    }
+                },
+                methods: {
+                    return_null: function () {
+                        this.setPoint();
+                    },
+                    setPoint: function () {
+                        var lat = $('#location_place_lat').val();
+                        var lng = $('#location_place_lng').val();
+                        $.ajax({
+                            type: 'POST',
+                            url: '/setLocation',
+                            crossDomain: true,
+                            headers:{
+                                'Access-Control-Allow-Origin':'*'
+                            },
+                            data: {
+                                idUser: '<%= user._id ? user._id : '' %>',
+                                location_lat: lat,
+                                location_lng: lng,
+                                category: this.form_data.category,
+                                name: this.form_data.name,
+                                count_osnovatelei: this.form_data.count_osnovatelei,
+                                step_project: this.form_data.step_project,
+                                need: this.form_data.need,
+                                website: this.form_data.website,
+                                dop_text: this.form_data.dop_text
+                            },
+                            success: function(data){
+                                console.log(data);
+                                console.log()
+                                addMarker({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
+                                console.log({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
+                                formPoints.$data.form_data = {
+                                        category: '',
+                                        name: '',
+                                        count_osnovatelei: '',
+                                        step_project: '',
+                                        need: '',
+                                        website: '',
+                                        dop_text: ''
+                                };
+                                $('#pac-input').val('');
+                                map.setZoom(6);
+                                alert('Ваша точка успешно добавлена!');
+                            },
+                            error: function(data){
+                                alert('Что-то пошло не так!');
+                            }
+                        });
+                    }
+                }
+            })
+        </script>
             <div class="v-spacer col-sm-12 v-height-big"></div>
 
-
-        </form>
           <% } else {%>
           <div class="clo-xs-12 center">
               <br>
@@ -157,7 +228,7 @@
             <a href="/login" class="btn v-btn v-emerald">Войти чтобы оставить отметку</a>
           </div>
           <% } %>
-        <div class="col-xs-12" id="demo">
+        <div class="col-xs-12" id="demo" v-if="gridData.length">
 
                 <div id="search" class="form-horizontal">
                     <div class="form-group">
@@ -498,53 +569,9 @@ var demo = new Vue({
     gridColumns: ['name', 'category'],
     gridData: All_locations
   }
-})
-</script>
-<script>
-
-    <% if (user != null) { %>
-  $('form[id=setLocation]').submit(function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-        if(!$('#pac-input').val()){
-            $('#pac-input').addClass('error');
-            alert('Выберите месторасположение!');
-        }else{
-            $('#pac-input').removeClass('error');
-            var lat = Number(document.getElementById('location_place_lat').value);
-            var lng = Number(document.getElementById('location_place_lng').value);
-            var category = document.getElementById('category').value;
-            var name = document.getElementById('name_location').value;
-            $.ajax({
-                type: 'POST',
-                url: '/setLocation',
-                crossDomain: true,
-                headers:{
-                    'Access-Control-Allow-Origin':'*'
-                },
-                data: {
-                    idUser: '<%= user._id ? user._id : '' %>',
-                    location_lat: lat,
-                    location_lng: lng,
-                    category: category,
-                    name: name
-                },
-                success: function(data){
-                    console.log(data);
-                    addMarker({ lat: lat, lng: lng }, category);
-                    console.log({ lat: lat, lng: lng }, category);
-                    map.setZoom(6);
-                    alert('Ваша точка успешно добавлена!');
-                },
-                error: function(data){
-                    alert('Что-то пошло не так!');
-                }
-            });
-        }
-  });
-
-  <% } %>
+});
 
 </script>
+
 </body>
 </html>

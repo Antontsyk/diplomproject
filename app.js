@@ -70,7 +70,13 @@ app.post('/setLocation', function (req, res) {
     var NewLocation = {
         name: req.body.name,
         place: { lat: req.body.location_lat, lng: req.body.location_lng },
-        category: req.body.category
+        category: req.body.category,
+        count_osnovatelei: req.body.count_osnovatelei,
+        step_project: req.body.step_project,
+        need: req.body.need,
+        website: req.body.website,
+        dop_text: req.body.dop_text
+
     };
     var user = '';
 

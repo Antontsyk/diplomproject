@@ -66,6 +66,18 @@ app.post('/setTask', function (req, res) {
 });
 
 app.post('/setLocation', function (req, res) {
+    User.find({}, function(err, users) {
+
+        users.forEach(function(user) {
+            user.local.locations.map(function (value) {
+                if( value.name == req.body.name ){
+                    console.log( value.name, 'Name already in list' );
+                    res.status(300).send( ' Name already in list ' );
+                    return;
+                }
+            });
+        });
+    })
     var UserId = req.body.idUser;
     var NewLocation = {
         name: req.body.name,
@@ -79,7 +91,6 @@ app.post('/setLocation', function (req, res) {
 
     };
     var user = '';
-
     User.findById(UserId, function (err, user) {
         user.local.locations.push(NewLocation);
         user.save();
@@ -89,6 +100,21 @@ app.post('/setLocation', function (req, res) {
     //console.log(user.local.locations);
     //res.json(user.local.locations);
     res.status(200).send('success');
+    //res.redirect('back');
+});
+
+app.get('/getAllLocations', function (req, res) {
+    var locations = new Array();
+    User.find({}, function(err, users) {
+        var userMap = {};
+
+        users.forEach(function(user) {
+            userMap[user._id] = user.local.locations;
+        });
+        res.status(200).json( userMap );
+    })
+
+
     //res.redirect('back');
 });
 

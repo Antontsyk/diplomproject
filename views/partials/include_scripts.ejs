@@ -15,26 +15,3 @@
 <script src="plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 
 <script src="js/theme-core.js"></script>
-<script>
-    $.ajax({
-        url: 'localhost:3000/register',             // указываем URL и
-        type: 'POST',
-        dataType: 'json',
-        crossDomain: true,
-        headers:{
-            'Access-Control-Allow-Origin':'*'
-        },
-        data: {
-            first_name: '124235',
-            last_name: '124235',
-            email: '124235',
-            password: '124235'
-        },
-        success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-            console.log(data)
-        },
-        error: function(data){
-            console.log(data)
-        }
-    });
-</script>

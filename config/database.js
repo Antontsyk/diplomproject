@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'mongodb://diplom:diplom@ds149998.mlab.com:49998/fordiplomproject',
+  url: 'mongodb://admin:admin111@ds161710.mlab.com:61710/startupmap',
 };

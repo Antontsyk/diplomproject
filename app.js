@@ -66,41 +66,42 @@ app.post('/setTask', function (req, res) {
 });
 
 app.post('/setLocation', function (req, res) {
+    var isHaveRepeatName = false;
+    var nameThatRepeat = req.body.name;
     User.find({}, function(err, users) {
-
-        users.forEach(function(user) {
-            user.local.locations.map(function (value) {
-                if( value.name == req.body.name ){
-                    console.log( value.name, 'Name already in list' );
-                    res.status(300).send( ' Name already in list ' );
-                    return;
-                }
+        console.log(users);
+        isHaveRepeatName = users.some(function(user) {
+            return user.local.locations.some(function (value) {
+                return value.name == nameThatRepeat;
             });
         });
-    })
-    var UserId = req.body.idUser;
-    var NewLocation = {
-        name: req.body.name,
-        place: { lat: req.body.location_lat, lng: req.body.location_lng },
-        category: req.body.category,
-        count_osnovatelei: req.body.count_osnovatelei,
-        step_project: req.body.step_project,
-        need: req.body.need,
-        website: req.body.website,
-        dop_text: req.body.dop_text
-
-    };
-    var user = '';
-    User.findById(UserId, function (err, user) {
-        user.local.locations.push(NewLocation);
-        user.save();
-        console.log(user.local.email);
-        user = (user);
     });
-    //console.log(user.local.locations);
-    //res.json(user.local.locations);
-    res.status(200).send('success');
-    //res.redirect('back');
+    console.log( isHaveRepeatName );
+    if( !isHaveRepeatName ){
+        var UserId = req.body.idUser;
+        var NewLocation = {
+            name: req.body.name,
+            place: { lat: req.body.location_lat, lng: req.body.location_lng },
+            category: req.body.category,
+            count_osnovatelei: req.body.count_osnovatelei,
+            step_project: req.body.step_project,
+            need: req.body.need,
+            website: req.body.website,
+            dop_text: req.body.dop_text
+
+        };
+        var user = '';
+        User.findById(UserId, function (err, user) {
+            user.local.locations.push(NewLocation);
+            user.save();
+            console.log(user.local.email);
+            user = (user);
+        });
+
+        res.status(200).send('success');
+    }else{
+        res.status(400).send( ' Name already in list ' );
+    }
 });
 
 app.get('/getAllLocations', function (req, res) {

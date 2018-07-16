@@ -124,7 +124,7 @@
             </div>
         </div>
         <div class="col-md-3 p-y-xs">
-            <button type="submit" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint">Сохранить</button>
+            <button v-if="!nameRepeat" type="submit" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint">Сохранить</button>
         </div>
     </div>
 </div>
@@ -134,6 +134,7 @@
         el: '#setLocation',
         data: {
             idUser: '<%= user._id ? user._id : '' %>',
+            nameRepeat: false,
             form_data: {
                 category: '',
                 name: '',
@@ -142,6 +143,15 @@
                 need: '',
                 website: '',
                 dop_text: ''
+            }
+        },
+        watch: {
+            'form_data.name': function(val){
+                var isRepeat = listLocation.gridData.some(function (value) {
+                    return value.name.toLowerCase() == val.toLowerCase();
+                });
+                this.nameRepeat = isRepeat;
+                isRepeat ? $('#name_location').addClass('error') : $('#name_location').removeClass('error');
             }
         },
         mounted: function() {
@@ -180,9 +190,8 @@
                         website: this.form_data.website,
                         dop_text: this.form_data.dop_text
                     },
-                    success: function(data){
-                        console.log(data);
-                        console.log()
+                    success: function(data, param1){
+                        console.log(data, param1);
                         addMarker({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
                         console.log({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
                         formPoints.$data.form_data = {

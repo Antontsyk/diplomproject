@@ -1,17 +1,17 @@
 module.exports = {
   facebookAuth: {
-    clientID: '1823365971306438',
-    clientSecret: 'bfacd534d9533b579aeda540696f03d1',
-    callbackURL: 'http://startupmap.by/auth/facebook/callback',
+    clientID: '275114056579606',
+    clientSecret: 'cd8713a6056288da09010fff5b745125',
+    callbackURL: 'https://startupmap.by/auth/facebook/callback',
   },
   twitterAuth: {
     consumerKey: 'XpZkYwisuEddSTxDDhi1WUHF4',
     consumerSecret: 'IaoX5AG9DpbuTXFv96KRUdOBZq56WvN2ibDZ3p3w5SvVp5FJml',
-    callbackURL: 'http://startupmap.by/auth/twitter/callback',
+    callbackURL: 'https://startupmap.by/auth/twitter/callback',
   },
   googleAuth: {
     clientID: '355932575329-0g7ot371p59ap77211buh5gvicbrdnqa.apps.googleusercontent.com',
     clientSecret: 'TYFez7-wml9EuD7AjK789uIk',
-    callbackURL: 'http://startupmap.by/auth/google/callback',
+    callbackURL: 'https://startupmap.by/auth/google/callback',
   }
 };

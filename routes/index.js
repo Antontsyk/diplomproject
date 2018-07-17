@@ -68,13 +68,13 @@ router.get('/logout', function (req, res) {
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/',
     failureRedirect: '/signup',
-    failureFlash: true,
+    failureFlash: true
 }));
 
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: true,
+    failureFlash: true
 }));
 
 router.get('/auth/facebook', passport.authenticate('facebook', {
@@ -83,14 +83,14 @@ router.get('/auth/facebook', passport.authenticate('facebook', {
 
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
     successRedirect: '/',
-    failureRedirect: '/',
+    failureRedirect: '/'
 }));
 
 router.get('/auth/twitter', passport.authenticate('twitter'));
 
 router.get('/auth/twitter/callback', passport.authenticate('twitter', {
     successRedirect: '/',
-    failureRedirect: '/',
+    failureRedirect: '/'
 }));
 
 router.get('/auth/google', passport.authenticate('google', {
@@ -98,7 +98,9 @@ router.get('/auth/google', passport.authenticate('google', {
 }));
 
 router.get('/auth/google/callback', passport.authenticate('google', {
-        failureRedirect: '/login' 
+        successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true
     }), function (req, res) {
     res.redirect('/');
 });

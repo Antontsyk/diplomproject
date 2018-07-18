@@ -5,6 +5,9 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var User = require('../models/user');
 var configAuth = require('./auth');
 
+var randomstring = require("randomstring");
+var nodemailer = require('nodemailer');
+
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
@@ -17,7 +20,7 @@ module.exports = function(passport) {
     });
   });
 
-  passport.use('local-signup', new LocalStrategy({
+/*  passport.use('local-signup', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true,
@@ -44,7 +47,88 @@ module.exports = function(passport) {
         }
       });
     });
-  }));
+  }));*/
+
+
+    passport.use('local-signup', new LocalStrategy({
+            // by default, local strategy uses username and password, we will override with email
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass back the entire request to the callback
+        },
+
+        function (req, email, password, done) {
+            // asynchronous
+            // User.findOne wont fire unless data is sent back
+            process.nextTick(function () {
+                // find a user whose email is the same as the forms email
+                // we are checking to see if the user trying to login already exists
+                User.findOne({'local.email': email}, function (err, user) {
+                    // if there are any errors, return the error
+                    if (err) {
+                        return done(err);
+                    }
+
+                    // check to see if theres already a user with that email
+                    if (user) {
+                        console.log('that email exists');
+                        return done(null, false, req.flash('signupMessage', email + ' is already in use. '));
+
+                    } else {
+                        User.findOne({'local.email': req.body.email}, function (err, user) {
+                            if (user) {
+                                console.log('That username exists');
+                                return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                            }
+
+                            if (req.body.password != req.body.confirm_password) {
+                                console.log('Passwords do not match');
+                                return done(null, false, req.flash('signupMessage', 'Your passwords do not match'));
+                            }
+
+                            else {
+                                // create the user
+                                var newUser = new User();
+
+                                var permalink = req.body.email.toLowerCase().replace(' ', '').replace(/[^\w\s]/gi, '').trim();
+
+                                var verification_token = randomstring.generate({
+                                    length: 64
+                                });
+
+
+                                newUser.local.email = email;
+                                newUser.local.password = newUser.generateHash(password);
+                                newUser.local.permalink = permalink;
+                                //Verified will get turned to true when they verify email address
+                                newUser.local.verified = false;
+                                newUser.local.verify_token = verification_token;
+                                try {
+                                    newUser.save(function (err) {
+                                        if (err) {
+                                            throw err;
+                                        } else {
+                                            //VerifyEmail.sendverification(email, verification_token, permalink);
+                                            // Send the email
+                                            var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
+                                            var mailOptions = { from: 'no-reply@yourwebapplication.com', to: email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink+ '/' + verification_token + '.\n' };
+                                            transporter.sendMail(mailOptions, function (err) {
+
+                                                if (err) { console.log({ msg: err.message }); }
+                                                console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink+ '/' + verification_token + '.\n');
+                                            });
+                                            return done(null, newUser);
+                                        }
+                                    });
+                                } catch (err) {
+
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }));
 
   passport.use('local-login', new LocalStrategy({
     usernameField: 'email',

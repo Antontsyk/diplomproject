@@ -66,6 +66,25 @@ app.post('/setTask', function (req, res) {
     res.redirect('back');
 });
 
+app.get('/verify/:permaink/:token', function (req, res) {
+    var permalink = req.params.permaink;
+    var token = req.params.token;
+
+    User.findOne({'local.permalink': permalink}, function (err, user) {
+        if (user.local.verify_token == token) {
+            console.log('that token is correct! Verify the user');
+
+            User.findOneAndUpdate({'local.permalink': permalink}, {'local.verified': true}, function (err, resp) {
+                console.log('The user has been verified!');
+            });
+
+            res.redirect('/login');
+        } else {
+            console.log('The token is wrong! Reject the user. token should be: ' + user.local.verify_token);
+        }
+    });
+});
+
 app.post('/setLocation', function (req, res) {
     var isHaveRepeatName = false;
     var nameThatRepeat = req.body.name;

@@ -3,7 +3,6 @@ var passport = require('passport');
 var router = express.Router();
 var User = require('../models/user');
 
-
 router.get('/', function (req, res, next) {
     User.find({}, function (err, users) {
         res.render('index', {
@@ -67,8 +66,7 @@ router.get('/logout', function (req, res) {
 
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/',
-    failureRedirect: '/signup',
-    failureFlash: true
+    failureRedirect: '/signup'
 }));
 
 router.post('/login', passport.authenticate('local-login', {

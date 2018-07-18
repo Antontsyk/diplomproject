@@ -17,6 +17,7 @@
     "https-proxy-agent": "^2.2.1",
     "mongoose": "^4.2.6",
     "morgan": "~1.6.1",
+    "nodemailer": "^4.6.7",
     "passport": "^0.3.2",
     "passport-facebook": "^2.0.0",
     "passport-google-oauth": "^0.2.0",
@@ -24,6 +25,7 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "~1.0.0",
     "passport-twitter": "^1.0.3",
+    "randomstring": "^1.1.5",
     "serve-favicon": "~2.3.0"
   }
 }

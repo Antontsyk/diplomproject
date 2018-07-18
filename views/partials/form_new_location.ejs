@@ -122,6 +122,7 @@
         </div>
         <div class="col-md-3 p-y-xs">
             <button v-if="!nameRepeat" type="submit" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint">Сохранить</button>
+            <button v-else class="btn v-btn v-error red btn-block" disabled>Такое имя уже существует</button>
         </div>
     </div>
 </div>

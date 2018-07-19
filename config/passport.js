@@ -110,14 +110,29 @@ module.exports = function(passport) {
                                         } else {
                                             //VerifyEmail.sendverification(email, verification_token, permalink);
                                             // Send the email
-                                            var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-                                            var mailOptions = { from: 'no-reply@yourwebapplication.com', to: email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink+ '/' + verification_token + '.\n' };
+                                            var transporter = nodemailer.createTransport({
+                                                host: 'smtp.yandex.ru',
+                                                service: 'smtp.yandex.ru',
+                                                port: 465,
+                                                secure: true,
+                                                auth: {
+                                                    user: 'admin@we.guru',
+                                                    pass: 'adminweguru1234'
+                                                }
+                                            });
+
+                                            var mailOptions = {
+                                                from: 'admin@we.guru',
+                                                to: email,
+                                                subject: 'Account Verification Token',
+                                                text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink+ '/' + verification_token + '.\n'
+                                            };
                                             transporter.sendMail(mailOptions, function (err) {
 
                                                 if (err) { console.log({ msg: err.message }); }
                                                 console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink+ '/' + verification_token + '.\n');
                                             });
-                                            return done(null, newUser);
+                                            return done(null, false, req.flash('signupMessage', email + ' SUCSSESS!!!!!!!!!!!!!!!!!! '));
                                         }
                                     });
                                 } catch (err) {
@@ -125,6 +140,7 @@ module.exports = function(passport) {
                                 }
                             }
                         });
+
                     }
                 });
             });

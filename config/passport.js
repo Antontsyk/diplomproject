@@ -112,7 +112,6 @@ module.exports = function(passport) {
                                             // Send the email
                                             var transporter = nodemailer.createTransport({
                                                 host: 'smtp.yandex.ru',
-                                                service: 'smtp.yandex.ru',
                                                 port: 465,
                                                 secure: true,
                                                 auth: {
@@ -132,7 +131,7 @@ module.exports = function(passport) {
                                                 if (err) { console.log({ msg: err.message }); }
                                                 console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink+ '/' + verification_token + '.\n');
                                             });
-                                            return done(null, false, req.flash('signupMessage', email + ' SUCSSESS!!!!!!!!!!!!!!!!!! '));
+                                            return done(null, false, req.flash('message', email + ' SUCSSESS!!!!!!!!!!!!!!!!!! '));
                                         }
                                     });
                                 } catch (err) {

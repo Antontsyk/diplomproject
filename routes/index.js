@@ -27,7 +27,8 @@ router.get('/login', function (req, res, next) {
 router.get('/signup', function (req, res) {
     res.render('signup.ejs', {
         user: req.user,
-        message: req.flash('loginMessage'),
+        message: req.flash('signupMessage'),
+        successMessage: req.flash('signupMessageSuccess'),
         title: 'signup'
     });
 });

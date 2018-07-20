@@ -4,81 +4,140 @@
 <!--Header-->
 <% include partials/header.ejs %>
 <!--End Header-->
+<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
+</script>
 
 <div id="container" class="v-bg-color">
 
-  <div class="v-page-wrap no-top-spacing padding-50 body-sign">
+    <div class="v-page-wrap no-top-spacing padding-50 body-sign">
 
-    <div class="container">
-      <div class="v-spacer col-sm-12 v-height-small"></div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-
-        <div class="col-sm-12">
-
-            <% if (message != null) { %>
-          <div class="alert-danger"><%= message %></div>
-            <% } %>
-
-          <form class="signup" action="/signup" method="post" style="margin: 0 auto;">
-            <div class="form-group">
-              <label>E-mail <span class="required">*</span></label>
-              <input type="email" value="" placeholder="E-mail Address" maxlength="100" class="form-control" name="email" id="email">
-            </div>
-
-            <div class="form-group">
-              <div class="row">
-                <div class="col-sm-6">
-                  <label>Пароль</label>
-                  <input name="password" type="password" placeholder="Пароль" class="form-control input-lg">
-                </div>
-                <div class="col-sm-6">
-                  <label>Повторите пароль</label>
-                  <input name="confirm_password" placeholder="Повторите пароль" type="password" class="form-control input-lg">
-                </div>
-              </div>
-            </div>
-
+        <div class="container">
+            <div class="v-spacer col-sm-12 v-height-small"></div>
+        </div>
+        <div class="container">
             <div class="row">
-              <div class="col-sm-8">
-                <div class="checkbox-custom checkbox-default">
-                  <input id="RememberMe" name="rememberme" type="checkbox">
-                  <label for="AgreeTerms">Я согласен с <a class="v-link" href="#">правилами</a></label>
-                </div>
-              </div>
-              <div class="col-sm-4 pull-right">
-                <button type="submit" class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">Зарегистрировать</button>
-              </div>
-            </div>
 
-            <span class="line-thru text-center text-uppercase pull-bottom-small pull-top-small">
+                <div class="col-sm-12" id="sugnupForm">
+
+                    <% if (message != null) { %>
+                    <div class="alert-danger"><%= message %></div>
+                    <% } %>
+                    <% if (successMessage != null) { %>
+                    <div class="alert-success"><%= successMessage %></div>
+                    <% } %>
+
+                    <form class="signup" action="/signup" method="post" style="margin: 0 auto;">
+
+                        <div class="form-group">
+                            <label>E-mail <span class="required">*</span></label>
+                            <input type="email" value="" placeholder="E-mail Address" maxlength="100"
+                                   class="form-control" name="email" id="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Пароль</label>
+                                    <input name="password" type="password" placeholder="Пароль"
+                                           class="form-control input-lg" required>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Повторите пароль</label>
+                                    <input name="confirm_password" placeholder="Повторите пароль" type="password"
+                                           class="form-control input-lg" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <vue-recaptcha
+                                        v-if="!verifyKey"
+                                        class="g-recaptcha"
+                                        ref="invisibleRecaptcha"
+                                        @verify="onVerify"
+                                        @expired="onExpired"
+                                        :sitekey="sitekey">
+                                </vue-recaptcha>
+                            </div>
+                        </div>
+                        <div class="row" v-if="verifyKey">
+                            <div class="col-sm-8">
+                                <div class="checkbox-custom checkbox-default">
+                                    <input id="RememberMe" name="rememberme" type="checkbox" v-model="checkRuleSignUP">
+                                    <label for="AgreeTerms">Я согласен с <a class="v-link"
+                                                                            href="#">правилами</a></label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 pull-right">
+                                <button type="submit" v-if="verifyKey && checkRuleSignUP"
+                                        class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">
+                                    Зарегистрировать
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="line-thru text-center text-uppercase pull-bottom-small pull-top-small">
                                 <span>or</span>
                             </span>
 
-            <div class="mb-xs text-center">
-              <a class="btn btn-facebook" href="/auth/facebook">Connect with <i class="fa fa-facebook"></i></a>
-              <a class="btn btn-twitter" href="/auth/twitter">Connect with <i class="fa fa-twitter"></i></a>
-              <a class="btn btn-gplus" href="/auth/facebook">Connect with <i class="fa fa-google-plus"></i></a>
+                        <div class="mb-xs text-center">
+                            <a class="btn btn-facebook" href="/auth/facebook">Connect with <i
+                                        class="fa fa-facebook"></i></a>
+                            <a class="btn btn-twitter" href="/auth/twitter">Connect with <i
+                                        class="fa fa-twitter"></i></a>
+                            <a class="btn btn-gplus" href="/auth/facebook">Connect with <i
+                                        class="fa fa-google-plus"></i></a>
+                        </div>
+
+                        <p class="text-center pull-top-small">
+                            Don't have an account yet? <a href="pages-signup.html">Sign Up!</a>
+                        </p>
+                    </form>
+                </div>
             </div>
-
-            <p class="text-center pull-top-small">
-              Don't have an account yet? <a href="pages-signup.html">Sign Up!</a>
-            </p>
-          </form>
         </div>
-      </div>
+
+        <div class="container">
+            <div class="v-spacer col-sm-12 v-height-standard"></div>
+        </div>
     </div>
 
-    <div class="container">
-      <div class="v-spacer col-sm-12 v-height-standard"></div>
-    </div>
-  </div>
-
-  <!--Footer-Wrap-->
+    <!--Footer-Wrap-->
     <% include partials/footer.ejs %>
-  <!--End Footer-Wrap-->
+    <!--End Footer-Wrap-->
+
+    <script>
+        var sugnupForm = new Vue({
+            el: '#sugnupForm',
+            data: {
+                sitekey: '6LdBSWUUAAAAAHSqpOBBIZ2Cz7kT0VzfEnvTfg1F',
+                verifyKey: '',
+                checkRuleSignUP: ''
+            },
+            components: {
+                'vue-recaptcha': VueRecaptcha
+            },
+            watch: {},
+            mounted: function () {
+
+            },
+            methods: {
+                onVerify: function (response) {
+                    console.log('Verify: ' + response);
+                    this.verifyKey = response;
+                },
+                onExpired: function () {
+                    console.log('Expired')
+                    this.verifyKey = '';
+                },
+                resetRecaptcha() {
+                    this.$refs.recaptcha.reset() // Direct call reset method
+                }
+            }
+        })
+    </script>
 </div>
 <!-- Libs -->
 <% include partials/include_scripts.ejs %>

@@ -9,6 +9,11 @@ var transporter = nodemailer.createTransport({
     auth: {
         user: 'admin@we.guru',
         pass: 'adminweguru1234'
+    },
+    tls: {
+        // do not fail on invalid certs
+        ciphers:'SSLv3',
+        rejectUnauthorized: false
     }
 });
 var mailOptions = {

@@ -123,7 +123,7 @@ module.exports = function (passport) {
                                         from: 'admin@we.guru',
                                         to: email,
                                         subject: 'Account Verification Token',
-                                        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink + '/' + verification_token + '.\n'
+                                        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: <a href=" \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink + '/' + verification_token + '">.\n'
                                     };
                                     transporter.sendMail(mailOptions, function (err) {
 

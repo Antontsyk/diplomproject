@@ -124,7 +124,7 @@
             </div>
         </div>
         <div class="col-md-3 p-y-xs">
-            <button v-if="!nameRepeat" type="submit" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint">Сохранить</button>
+            <button v-if="!nameRepeat" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint" :disabled="validateForm">Сохранить</button>
             <button v-else class="btn v-btn v-error red btn-block" disabled>Такое имя уже существует</button>
         </div>
     </div>
@@ -136,6 +136,7 @@
         data: {
             idUser: '<%= user._id ? user._id : '' %>',
             nameRepeat: false,
+            validateForm: false,
             placees: [],
             form_data: {
                 category: '',
@@ -160,6 +161,9 @@
             this.getUsers();
         },
         methods: {
+            checkValidateForm (){
+
+            },
             getUsers: function(){
                 this.$http.get('/getAllLocations').then( function(response) {
 
@@ -182,49 +186,57 @@
                 this.setPoint();
             },
             setPoint: function () {
+                var _this = this;
                 var lat = $('#location_place_lat').val();
                 var lng = $('#location_place_lng').val();
-                $.ajax({
-                    type: 'POST',
-                    url: '/setLocation',
-                    crossDomain: true,
-                    headers:{
-                        'Access-Control-Allow-Origin':'*'
-                    },
-                    data: {
-                        idUser: '<%= user._id ? user._id : '' %>',
-                        location_lat: lat,
-                        location_lng: lng,
-                        category: this.form_data.category,
-                        name: this.form_data.name,
-                        count_osnovatelei: this.form_data.count_osnovatelei,
-                        step_project: this.form_data.step_project,
-                        need: this.form_data.need,
-                        website: this.form_data.website,
-                        dop_text: this.form_data.dop_text
-                    },
-                    success: function(data, param1){
-                        console.log(data, param1);
-                        addMarker({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
-                        console.log({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
-                        formPoints.$data.form_data = {
-                            category: '',
-                            name: '',
-                            count_osnovatelei: '',
-                            step_project: '',
-                            need: '',
-                            website: '',
-                            dop_text: ''
-                        };
-                        $('#pac-input').val('');
-                        listLocation.getUsers();
-                        map.setZoom(6);
-                        alert('Ваша точка успешно добавлена!');
-                    },
-                    error: function(data){
-                        alert('Что-то пошло не так!');
-                    }
-                });
+                if( !lat || !lng || !this.form_data.name || !this.form_data.category){
+                    alert('не все поля заполнены! ');
+                } else{
+                    $.ajax({
+                        type: 'POST',
+                        url: '/setLocation',
+                        crossDomain: true,
+                        headers:{
+                            'Access-Control-Allow-Origin':'*'
+                        },
+                        data: {
+                            idUser: '<%= user._id ? user._id : '' %>',
+                            location_lat: lat,
+                            location_lng: lng,
+                            category: this.form_data.category,
+                            name: this.form_data.name,
+                            count_osnovatelei: this.form_data.count_osnovatelei,
+                            step_project: this.form_data.step_project,
+                            need: this.form_data.need,
+                            website: this.form_data.website,
+                            dop_text: this.form_data.dop_text
+                        },
+                        success: function(data, param1){
+                            console.log(data, param1);
+                            addMarker({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
+                            console.log({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
+                            formPoints.$data.form_data = {
+                                category: '',
+                                name: '',
+                                count_osnovatelei: '',
+                                step_project: '',
+                                need: '',
+                                website: '',
+                                dop_text: ''
+                            };
+                            $('#pac-input').val('');
+                            listLocation.getUsers();
+                            map.setZoom(6);
+                            alert('Ваша точка успешно добавлена!');
+                        },
+                        error: function(data){
+                            alert('Что-то пошло не так!');
+                        }
+                    });
+                    setTimeout(function () {
+                        _this.getUsers();
+                    },1000);
+                }
             }
         }
     })

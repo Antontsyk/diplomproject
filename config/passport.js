@@ -109,8 +109,8 @@ module.exports = function (passport) {
                                         port: 465,
                                         secure: true,
                                         auth: {
-                                            user: 'admin@we.guru',
-                                            pass: 'adminweguru1234'
+                                            user: 'startupmap@we.guru',
+                                            pass: 'startupmap2007'
                                         },
                                         tls: {
                                             // do not fail on invalid certs
@@ -120,7 +120,7 @@ module.exports = function (passport) {
                                     });
 
                                     var mailOptions = {
-                                        from: 'admin@we.guru',
+                                        from: 'startupmap@we.guru',
                                         to: email,
                                         subject: 'Account Verification Token',
                                         text: 'Hello,\n\n' + 'Please verify your account by clicking the link: <a href=" \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink + '/' + verification_token + '">.\n'

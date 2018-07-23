@@ -173,13 +173,13 @@
             validateForm: false,
             placees: [],
             form_data: {
-                category: '',
-                name: '',
-                count_osnovatelei: '',
-                step_project: '',
-                need: '',
-                website: '',
-                dop_text: ''
+                name: localStorage.formDataName ? localStorage.formDataName : '',
+                category: localStorage.formDataCategory ? localStorage.formDataCategory : '',
+                count_osnovatelei: localStorage.formDataCountOsnovatelei ? localStorage.formDataCountOsnovatelei : '',
+                step_project: localStorage.formDataStepProject ? localStorage.formDataStepProject : '',
+                need: localStorage.formDataNeed ? localStorage.formDataNeed : '',
+                website: localStorage.formDataWebsite ? localStorage.formDataWebsite : '',
+                dop_text: localStorage.formDataDopText ? localStorage.formDataDopText : ''
             }
         },
         watch: {
@@ -188,13 +188,44 @@
                     return value.name.toLowerCase() == val.toLowerCase();
                 });
                 this.nameRepeat = isRepeat;
+                localStorage.formDataName = val;
                 isRepeat ? $('#name_location').addClass('error') : $('#name_location').removeClass('error');
+            },
+            'form_data.category': function (val) {
+                localStorage.formDataCategory = val;
+            },
+            'form_data.count_osnovatelei': function (val) {
+                localStorage.formDataCountOsnovatelei = val;
+            },
+            'form_data.step_project': function (val) {
+                localStorage.formDataStepProject = val;
+            },
+            'form_data.need': function (val) {
+                localStorage.formDataNeed = val;
+            },
+            'form_data.website': function (val) {
+                localStorage.formDataWebsite = val;
+            },
+            'form_data.dop_text': function (val) {
+                localStorage.formDataDopText = val;
             }
         },
         mounted: function () {
             this.getUsers();
         },
         methods: {
+            clearForm() {
+                localStorage.clear();
+                this.form_data = {
+                    name: '',
+                    category: '',
+                    count_osnovatelei: '',
+                    step_project: '',
+                    need: '',
+                    website: '',
+                    dop_text: ''
+                }
+            },
             checkValidateForm() {
 
             },
@@ -249,15 +280,7 @@
                             console.log(data, param1);
                             addMarker({lat: lat, lng: lng}, formPoints.$data.form_data.category);
                             console.log({lat: lat, lng: lng}, formPoints.$data.form_data.category);
-                            formPoints.$data.form_data = {
-                                category: '',
-                                name: '',
-                                count_osnovatelei: '',
-                                step_project: '',
-                                need: '',
-                                website: '',
-                                dop_text: ''
-                            };
+                            _this.clearForm();
                             $('#pac-input').val('');
                             listLocation.getUsers();
                             map.setZoom(6);

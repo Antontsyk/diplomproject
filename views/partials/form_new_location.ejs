@@ -79,7 +79,7 @@
                 </div>
                 <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
                     <!--<input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте" required>-->
-                    <input id="pac-input" class="form-control" type="text"
+                    <input id="pac-input" class="form-control" type="text" v-model="form_data.pointOnMap"
                            placeholder="Введите место" required>
                 </div>
                 <!--Toggle-->
@@ -173,6 +173,7 @@
             validateForm: false,
             placees: [],
             form_data: {
+                pointOnMap: /*localStorage.formDataPointOnMap ? localStorage.formDataPointOnMap : */'',
                 name: localStorage.formDataName ? localStorage.formDataName : '',
                 category: localStorage.formDataCategory ? localStorage.formDataCategory : '',
                 count_osnovatelei: localStorage.formDataCountOsnovatelei ? localStorage.formDataCountOsnovatelei : '',
@@ -183,6 +184,9 @@
             }
         },
         watch: {
+            'form_data.pointOnMap': function (val) {
+                //localStorage.formDataPointOnMap = val;
+            },
             'form_data.name': function (val) {
                 var isRepeat = listLocation.gridData.some(function (value) {
                     return value.name.toLowerCase() == val.toLowerCase();

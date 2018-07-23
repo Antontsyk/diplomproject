@@ -7,70 +7,81 @@
 
 <div id="container" class="v-bg-color">
 
-  <div class="v-page-wrap no-top-spacing padding-50 body-sign">
+    <div class="v-page-wrap no-top-spacing padding-50 body-sign">
 
-    <div class="container">
-      <div class="v-spacer col-sm-12 v-height-small"></div>
-    </div>
+        <div class="container">
+            <div class="v-spacer col-sm-12 v-height-small"></div>
+        </div>
 
-    <div class="container">
-      <div class="row">
-
-        <div class="col-sm-12 center">
-
-            <% if (message != null) { %>
-          <div class="alert-danger"><%= message %></div>
-            <% } %>
-
-          <form class="signup" action="/login" method="post" style="margin: 0 auto;">
-
-            <div class="form-group">
-              <label>Email <span class="required">*</span></label>
-              <input type="text" value="" placeholder="email" maxlength="100" class="form-control" name="email" id="email">
-            </div>
-            <div class="form-group">
-              <label>Пароль <span class="required">*</span></label>
-              <input type="password" value="" placeholder="Пароль" maxlength="100" class="form-control" name="password" id="password">
-            </div>
-
+        <div class="container">
             <div class="row">
-              <div class="col-sm-8">
-                <div class="checkbox-custom checkbox-default">
-                  <input id="RememberMe" name="rememberme" type="checkbox">
-                  <label for="RememberMe">Запомнить меня</label>
-                </div>
-              </div>
-              <div class="col-sm-4 pull-right">
-                <button type="submit" class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">Войти</button>
-              </div>
-            </div>
 
-            <span class="line-thru text-center text-uppercase pull-bottom-small pull-top-small">
+                <div class="col-sm-12 center">
+
+                    <% if (message != null) { %>
+                    <div class="alert-danger"><%= message %></div>
+                    <% } %>
+
+                    <form class="signup" action="/login" method="post" style="margin: 0 auto;">
+
+                        <div class="form-group">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="text" value="" placeholder="email" maxlength="100" class="form-control"
+                                   name="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Пароль <span class="required">*</span></label>
+                            <input type="password" value="" placeholder="Пароль" maxlength="100" class="form-control"
+                                   name="password" id="password">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="checkbox-custom checkbox-default">
+                                    <input id="RememberMe" name="rememberme" type="checkbox">
+                                    <label for="RememberMe">Запомнить меня</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 pull-right">
+                                <button type="submit"
+                                        class="btn v-btn v-btn-default v-small-button no-three-d pull-right no-margin-bottom no-margin-right">
+                                    Войти
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="line-thru text-center text-uppercase pull-bottom-small pull-top-small">
                                 <span>или</span>
                             </span>
 
-            <div class="mb-xs text-center">
-              <a class="btn btn-facebook" href="/auth/facebook">Connect with <i class="fa fa-facebook"></i></a>
-              <a class="btn btn-twitter" href="/auth/twitter">Connect with <i class="fa fa-twitter"></i></a>
-              <a class="btn btn-gplus" href="/auth/facebook">Connect with <i class="fa fa-google-plus"></i></a>
+                        <div class="mb-xs text-center">
+                            <a class="btn btn-facebook" href="/auth/facebook">Connect with <i
+                                        class="fa fa-facebook"></i></a>
+                            <a class="btn btn-twitter" href="/auth/twitter">Connect with <i
+                                        class="fa fa-twitter"></i></a>
+                        </div>
+                        <br>
+                        <div class="mb-xs text-center">
+                            <a class="btn btn-gplus" href="/auth/facebook">Connect with <i
+                                        class="fa fa-google-plus"></i></a>
+                        </div>
+
+                        <p class="text-center pull-top-small">
+                            У вас еще нет учетной записи? <a class="v-link" href="/signup">Зарегистрироваться!</a>
+                        </p>
+                    </form>
+                </div>
             </div>
-
-            <p class="text-center pull-top-small">
-              Don't have an account yet? <a class="v-link" href="#">Sign Up!</a>
-            </p>
-          </form>
         </div>
-      </div>
+
+        <div class="container">
+            <div class="v-spacer col-sm-12 v-height-standard"></div>
+        </div>
     </div>
 
-    <div class="container">
-      <div class="v-spacer col-sm-12 v-height-standard"></div>
-    </div>
-  </div>
-
-  <!--Footer-Wrap-->
-  <% include partials/footer.ejs %>
-  <!--End Footer-Wrap-->
+    <!--Footer-Wrap-->
+    <% include partials/footer.ejs %>
+    <!--End Footer-Wrap-->
 </div>
 <!-- Libs -->
 <% include partials/include_scripts.ejs %>

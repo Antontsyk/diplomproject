@@ -118,9 +118,7 @@ app.get('/getAllLocations', function (req, res) {
 });
 
 app.get('/getLocationsUser/:UserId', function (req, res) {
-    var locations = new Array();
-    console.log(UserId);
-    User.findById(UserId, function(err, users) {
+    User.findById(req.params.UserId, function(err, user) {
         res.status(200).json( user.local.locations );
     })
 });

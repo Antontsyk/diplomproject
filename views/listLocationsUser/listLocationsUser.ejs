@@ -1,0 +1,30 @@
+<div id="listLocations">
+    <table v-if="userLocations">
+        <tr v-for="location in userLocations">
+            <td>{{location.name}}</td>
+            <td>{{location.category}}</td>
+        </tr>
+    </table>
+</div>
+<script>
+
+    var listLocation = new Vue({
+        el: '#listLocations',
+        data: {
+            idUser: '<%= user ? user._id : '' %>',
+            userLocations: ''
+        },
+        mounted: function () {
+            this.getUsersLocations();
+        },
+        methods: {
+            getUsersLocations: function () {
+                this.$http.get('/getLocationsUser/' + this.idUser).then(function (response) {
+                    this.$data.userLocations = response.body;
+                }, function (response) {
+                    console.log(response);
+                });
+            }
+        }
+    });
+</script>

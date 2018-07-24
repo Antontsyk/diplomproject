@@ -4488,6 +4488,11 @@ body .btn-gplus:focus {
     border-color: #3d5c9c;
 }
 
+.btn-gplus{
+    background: #d34836;
+    border-color: #d34836;
+}
+
 .btn-twitter:hover {
     background: #63b3ef;
     border-color: #55acee;

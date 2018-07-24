@@ -1,21 +1,27 @@
-# express-authentication
+# Easy Node Authentication
 
-Simple authentication app using express, node & passport.
+Code for the entire scotch.io tutorial series: Complete Guide to Node Authentication
 
-Authenticate locally or through Facebook, Twitter or Google.
+We will be using Passport to authenticate users locally, with Facebook, Twitter, and Google.
 
-## Prerequisites 
+#### Upgraded To Express 4.0
+This tutorial has been upgraded to use ExpressJS 4.0. See [the commit](https://github.com/scotch-io/easy-node-authentication/commit/020dea057d5a0664caaeb041b18978237528f9a3) for specific changes.
 
-* [Git](http://git-scm.com/)
-* [Node.js with npm](https://nodejs.org/en/)
-* [MongoDB](https://docs.mongodb.org/manual/installation/)
+## Instructions
 
-## Installation
+If you would like to download the code and try it for yourself:
 
-* ` git clone https://github.com/Antontsyk/diplomproject`
-* `cd diplomproject`
-* `npm install`
-* You will need a Mongo instance running. In a new terminal window run `mongod`
-* `node app`
+1. Clone the repo: `git clone git@github.com:scotch-io/easy-node-authentication`
+2. Install packages: `npm install`
+3. Change out the database configuration in config/database.js
+4. Change out auth keys in config/auth.js
+5. Launch: `node server.js`
+6. Visit in your browser at: `http://localhost:8080`
 
-Head over to [http://localhost:3000](http://localhost:3000)
+## The Tutorials
+
+- [Getting Started and Local Authentication](http://scotch.io/tutorials/easy-node-authentication-setup-and-local)
+- [Facebook](http://scotch.io/tutorials/easy-node-authentication-facebook)
+- [Twitter](http://scotch.io/tutorials/easy-node-authentication-twitter)
+- [Google](http://scotch.io/tutorials/easy-node-authentication-google)
+- [Linking All Accounts Together](http://scotch.io/tutorials/easy-node-authentication-linking-all-accounts-together)

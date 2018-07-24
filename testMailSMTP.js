@@ -7,8 +7,8 @@ var transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: 'admin@we.guru',
-        pass: 'adminweguru1234'
+        user: 'startupmap@we.guru',
+        pass: 'startupmap2007'
     },
     tls: {
         // do not fail on invalid certs
@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport({
     }
 });
 var mailOptions = {
-    from: 'admin@we.guru',
+    from: 'startupmap@we.guru',
     to: 'Antontsyk@gmail.com',
     subject: 'Account Verification Token',
     text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'

@@ -6,59 +6,80 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
-                    <input type="hidden" name="idUser" value="<%= user._id ? user._id : '' %>" id="idUser">
+                    <input type="hidden" name="idUser" value="<%= user ? user._id : '' %>" id="idUser">
                     <input type="hidden" name="location_lat" id="location_place_lat">
                     <input type="hidden" name="location_lng" id="location_place_lng">
-                    <input type="text" name="name" class="form-control" id="name_location" placeholder="Название" v-model="form_data.name">
+                    <input type="text" name="name" class="form-control" id="name_location" placeholder="Название"
+                           v-model="form_data.name">
                 </div>
                 <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
-                    <select class="form-control" id="category" required  v-model="form_data.category">
+                    <select class="form-control" id="category" required v-model="form_data.category">
                         <option value="" disabled selected hidden>Категория</option>
                         <option value="2">
                             Авто. Мото
-                        </option><option value="3">
+                        </option>
+                        <option value="3">
                             Бытовые услуги
-                        </option><option value="4">
+                        </option>
+                        <option value="4">
                             Еда
-                        </option><option value="5">
+                        </option>
+                        <option value="5">
                             Здоровье и спорт
-                        </option><option value="6">
+                        </option>
+                        <option value="6">
                             Интерьер
-                        </option><option value="1">
+                        </option>
+                        <option value="1">
                             Информационные технологии
-                        </option><option value="7">
+                        </option>
+                        <option value="7">
                             Коммерция
-                        </option><option value="8">
+                        </option>
+                        <option value="8">
                             Культура
-                        </option><option value="9">
+                        </option>
+                        <option value="9">
                             Логистика
-                        </option><option value="10">
+                        </option>
+                        <option value="10">
                             Мода и стиль
-                        </option><option value="11">
+                        </option>
+                        <option value="11">
                             Ноухау
-                        </option><option value="12">
+                        </option>
+                        <option value="12">
                             Образование
-                        </option><option value="13">
+                        </option>
+                        <option value="13">
                             Промышленное производство
-                        </option><option value="14">
+                        </option>
+                        <option value="14">
                             Развлечения. Отдых
-                        </option><option value="15">
+                        </option>
+                        <option value="15">
                             Сельское хозяйство
-                        </option><option value="16">
+                        </option>
+                        <option value="16">
                             Социальные проекты
-                        </option><option value="17">
+                        </option>
+                        <option value="17">
                             Строительство
-                        </option><option value="18">
+                        </option>
+                        <option value="18">
                             Туризм
-                        </option><option value="19">
+                        </option>
+                        <option value="19">
                             Финансы
-                        </option><option value="20">
+                        </option>
+                        <option value="20">
                             Экология
-                        </option></select>
+                        </option>
+                    </select>
                 </div>
                 <div class="p-y-xs col-md-4 col-sm-6 col-xs-12">
                     <!--<input class="form-control" type="text" disabled id="location_map" placeholder="Место на карте" required>-->
-                    <input id="pac-input" class="form-control" type="text"
+                    <input id="pac-input" class="form-control" type="text" v-model="form_data.pointOnMap"
                            placeholder="Введите место" required>
                 </div>
                 <!--Toggle-->
@@ -90,7 +111,7 @@
                                         </select>
                                     </div>
                                     <div class="p-y-xs col-sm-6 col-xs-12">
-                                        <select class="form-control"  v-model="form_data.step_project">
+                                        <select class="form-control" v-model="form_data.step_project">
                                             <option value="" disabled selected hidden>Стадия проекта</option>
                                             <option>Идея</option>
                                             <option>MVP\Beta</option>
@@ -100,7 +121,7 @@
                                         </select>
                                     </div>
                                     <div class="p-y-xs col-sm-6 col-xs-12">
-                                        <select class="form-control"  v-model="form_data.need">
+                                        <select class="form-control" v-model="form_data.need">
                                             <option value="" disabled selected hidden>Что требуется</option>
                                             <option>Деньги</option>
                                             <option>Экспертиза</option>
@@ -109,10 +130,13 @@
                                         </select>
                                     </div>
                                     <div class="p-y-xs col-sm-6 col-xs-12">
-                                        <input type="text" id="website" name="website" class="form-control" placeholder="website"  v-model="form_data.website">
+                                        <input type="text" id="website" name="website" class="form-control"
+                                               placeholder="website" v-model="form_data.website">
                                     </div>
                                     <div class="col-xs-12 p-y-xs">
-                                        <textarea class="form-control" rows="3" id="textareaDefault" placeholder="От себя..." maxlength="300"  v-model="form_data.dop_text"></textarea>
+                                        <textarea class="form-control" rows="3" id="textareaDefault"
+                                                  placeholder="От себя..." maxlength="300"
+                                                  v-model="form_data.dop_text"></textarea>
                                         <span class="grey">{{ form_data.dop_text.length }} из 300 символов</span>
                                     </div>
                                 </div>
@@ -124,8 +148,18 @@
             </div>
         </div>
         <div class="col-md-3 p-y-xs">
-            <button v-if="!nameRepeat" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint" :disabled="validateForm">Сохранить</button>
+            <% if (user != null) { %>
+            <button v-if="!nameRepeat" class="btn v-btn v-emerald btn-block" @click.prevent="setPoint"
+                    :disabled="validateForm">Сохранить
+            </button>
             <button v-else class="btn v-btn v-error red btn-block" disabled>Такое имя уже существует</button>
+
+            <% } else { %>
+            <button v-if="!nameRepeat" class="btn v-btn v-emerald btn-block" onclick="window.location.href='/login'">
+                Сохранить
+            </button>
+            <button v-else class="btn v-btn v-error red btn-block" disabled>Такое имя уже существует</button>
+            <% } %>
         </div>
     </div>
 </div>
@@ -134,52 +168,87 @@
     var formPoints = new Vue({
         el: '#setLocation',
         data: {
-            idUser: '<%= user._id ? user._id : '' %>',
+            idUser: '<%= user ? user._id : '' %>',
             nameRepeat: false,
             validateForm: false,
             placees: [],
             form_data: {
-                category: '',
-                name: '',
-                count_osnovatelei: '',
-                step_project: '',
-                need: '',
-                website: '',
-                dop_text: ''
+                pointOnMap: /*localStorage.formDataPointOnMap ? localStorage.formDataPointOnMap : */'',
+                name: localStorage.formDataName ? localStorage.formDataName : '',
+                category: localStorage.formDataCategory ? localStorage.formDataCategory : '',
+                count_osnovatelei: localStorage.formDataCountOsnovatelei ? localStorage.formDataCountOsnovatelei : '',
+                step_project: localStorage.formDataStepProject ? localStorage.formDataStepProject : '',
+                need: localStorage.formDataNeed ? localStorage.formDataNeed : '',
+                website: localStorage.formDataWebsite ? localStorage.formDataWebsite : '',
+                dop_text: localStorage.formDataDopText ? localStorage.formDataDopText : ''
             }
         },
         watch: {
-            'form_data.name': function(val){
+            'form_data.pointOnMap': function (val) {
+                //localStorage.formDataPointOnMap = val;
+            },
+            'form_data.name': function (val) {
                 var isRepeat = listLocation.gridData.some(function (value) {
                     return value.name.toLowerCase() == val.toLowerCase();
                 });
                 this.nameRepeat = isRepeat;
+                localStorage.formDataName = val;
                 isRepeat ? $('#name_location').addClass('error') : $('#name_location').removeClass('error');
+            },
+            'form_data.category': function (val) {
+                localStorage.formDataCategory = val;
+            },
+            'form_data.count_osnovatelei': function (val) {
+                localStorage.formDataCountOsnovatelei = val;
+            },
+            'form_data.step_project': function (val) {
+                localStorage.formDataStepProject = val;
+            },
+            'form_data.need': function (val) {
+                localStorage.formDataNeed = val;
+            },
+            'form_data.website': function (val) {
+                localStorage.formDataWebsite = val;
+            },
+            'form_data.dop_text': function (val) {
+                localStorage.formDataDopText = val;
             }
         },
-        mounted: function() {
+        mounted: function () {
             this.getUsers();
         },
         methods: {
-            checkValidateForm (){
+            clearForm() {
+                localStorage.clear();
+                this.form_data = {
+                    name: '',
+                    category: '',
+                    count_osnovatelei: '',
+                    step_project: '',
+                    need: '',
+                    website: '',
+                    dop_text: ''
+                }
+            },
+            checkValidateForm() {
 
             },
-            getUsers: function(){
-                this.$http.get('/getAllLocations').then( function(response) {
+            getUsers: function () {
+                this.$http.get('/getAllLocations').then(function (response) {
 
                     this.placees = [];
 
-                    for( el in response.body){
+                    for (el in response.body) {
                         var location = response.body[el];
-                        if( location.length ){
-                            for ( var j = 0; j < location.length; j++ ){
-                                this.placees.push( location[j] );
+                        if (location.length) {
+                            for (var j = 0; j < location.length; j++) {
+                                this.placees.push(location[j]);
                             }
                         }
                     }
 
                 }, function (response) {
-                    console.log( response );
+                    console.log(response);
                 });
             },
             return_null: function () {
@@ -189,18 +258,18 @@
                 var _this = this;
                 var lat = $('#location_place_lat').val();
                 var lng = $('#location_place_lng').val();
-                if( !lat || !lng || !this.form_data.name || !this.form_data.category){
+                if (!lat || !lng || !this.form_data.name || !this.form_data.category) {
                     alert('не все поля заполнены! ');
-                } else{
+                } else {
                     $.ajax({
                         type: 'POST',
                         url: '/setLocation',
                         crossDomain: true,
-                        headers:{
-                            'Access-Control-Allow-Origin':'*'
+                        headers: {
+                            'Access-Control-Allow-Origin': '*'
                         },
                         data: {
-                            idUser: '<%= user._id ? user._id : '' %>',
+                            idUser: '<%= user ? user._id : '' %>',
                             location_lat: lat,
                             location_lng: lng,
                             category: this.form_data.category,
@@ -211,32 +280,56 @@
                             website: this.form_data.website,
                             dop_text: this.form_data.dop_text
                         },
-                        success: function(data, param1){
+                        success: function (data, param1) {
                             console.log(data, param1);
-                            addMarker({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
-                            console.log({ lat: lat, lng: lng }, formPoints.$data.form_data.category);
-                            formPoints.$data.form_data = {
-                                category: '',
-                                name: '',
-                                count_osnovatelei: '',
-                                step_project: '',
-                                need: '',
-                                website: '',
-                                dop_text: ''
-                            };
+                            addMarker({lat: lat, lng: lng}, formPoints.$data.form_data.category);
+                            console.log({lat: lat, lng: lng}, formPoints.$data.form_data.category);
+                            _this.clearForm();
                             $('#pac-input').val('');
                             listLocation.getUsers();
                             map.setZoom(6);
                             alert('Ваша точка успешно добавлена!');
                         },
-                        error: function(data){
+                        error: function (data) {
                             alert('Что-то пошло не так!');
                         }
                     });
                     setTimeout(function () {
                         _this.getUsers();
-                    },1000);
+                    }, 1000);
                 }
+            },
+
+            updatePoint(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/changeLocation',
+                    crossDomain: true,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    data: {
+                        idUser: '5b51e4f1b0448a135177c189',
+                        //location_lat: lat,
+                        //location_lng: lng,
+                        category: 2,
+                        name: 'fgdfg',
+                        count_osnovatelei: this.form_data.count_osnovatelei,
+                        step_project: this.form_data.step_project,
+                        need: this.form_data.need,
+                        website: this.form_data.website,
+                        dop_text: this.form_data.dop_text
+                    },
+                    success: function (data, param1) {
+                        console.log(data, param1);
+                        listLocation.getUsers();
+                    },
+                    error: function (data,a,b) {
+                        console.log(data);
+                        console.log(a);
+                        console.log(b);
+                    }
+                });
             }
         }
     })

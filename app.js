@@ -45,26 +45,6 @@ app.use(passport.session());
 app.use(flash());
 
 var User = require('./models/user');
-app.post('/setTask', function (req, res) {
-    var UserId = req.body.idUser;
-
-    var NewTask = {
-        from: req.body.from,
-        task: req.body.textTask,
-        date_start: req.body.date_start,
-        date_end: req.body.date_end,
-        status: "0"
-    };
-    User.findById(UserId, function (err, user) {
-        user.local.tasks.push(NewTask);
-        user.save();
-        console.log(user.local.email);
-        console.log(user.local.tasks);
-    });
-    //res.render('profile.ejs');
-
-    res.redirect('back');
-});
 
 app.get('/verify/:permaink/:token', function (req, res) {
     var permalink = req.params.permaink;
@@ -124,6 +104,7 @@ app.post('/setLocation', function (req, res) {
     }
 });
 
+
 app.get('/getAllLocations', function (req, res) {
     var locations = new Array();
     User.find({}, function(err, users) {
@@ -134,15 +115,46 @@ app.get('/getAllLocations', function (req, res) {
         });
         res.status(200).json( userMap );
     })
-
-
-    //res.redirect('back');
 });
 
-app.post('/changestatus', function (req, res) {
+app.get('/getLocationsUser/:UserId', function (req, res) {
+    var locations = new Array();
+    console.log(UserId);
+    User.findById(UserId, function(err, users) {
+        res.status(200).json( user.local.locations );
+    })
+});
+
+app.post( '/changeLocation', function (req, res) {
     var UserId = req.body.idUser;
-    var status = req.body.status;
-    var task_name = req.body.task_name;
+    var nameLocation = req.body.name;
+    var category = req.body.category;
+
+    console.log(UserId);
+    User.update({
+            _id: UserId,
+            "local.locations.name": nameLocation
+        }, {
+            $set: {
+                "local.locations.$.category": category
+            }
+        },
+        function (err, tank) {
+            if (err) {
+                console.log(tank);
+                return handleError(err);
+
+            }else{
+                console.log(tank);
+                res.status(200).send('OK');
+            }
+        }
+    );
+});
+
+/*app.post('/changestatus', function (req, res) {
+    var UserId = req.body.idUser;
+    var nameLocation = req.body.task_name;
 
     var namet = "local.tasks." + 1;
     User.update({
@@ -161,7 +173,7 @@ app.post('/changestatus', function (req, res) {
 
     //res.render('tasks.ejs');     
     res.redirect('back');
-});
+});*/
 
 
 

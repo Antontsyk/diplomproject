@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
         password: String,
         infoadd: String,
         permalink: String,
-        verified: { type: Boolean, default: false },
+        verified: Boolean,
         verify_token: String,
         tasks: [],
         locations: [],

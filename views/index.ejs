@@ -1,51 +1,29 @@
 <% include partials/head %>
-
-  <body>
+<body>
 <!--Header-->
 <% include partials/header.ejs %>
 <!--End Header-->
 <div id="container" class="slideshow">
-
-  <!--Set your own slider options. Look at the v_RevolutionSlider() function in 'theme-core.js' file to see options-->
-  <div class="fullwidthbanner-container" id="home">
-
-    <% include partials/map.ejs %>
-    <div class="container">
-          <% if (user != null) { %>
-        <br>
-
-        <% include partials/form_new_location.ejs %>
+    <div class="fullwidthbanner-container" id="home">
+        <% include partials/map.ejs %>
+        <div class="container">
             <div class="v-spacer col-sm-12 v-height-big"></div>
-
-          <% } else {%>
-          <div class="clo-xs-12 center">
-              <br>
-              <br>
-            <a href="/login" class="btn v-btn v-emerald">Войти чтобы оставить отметку</a>
-          </div>
-          <% } %>
-        <% include partials/table_filter.ejs %>
-
-      </div>
+            <% include partials/form_new_location.ejs %>
+            <div class="v-spacer col-sm-12 v-height-big"></div>
+            <% include partials/table_filter.ejs %>
+        </div>
     </div>
     <br>
     <br>
-
     <div class="shadow-right"></div>
-  </div>
-  <% include partials/script_map.ejs %>
-  <!--Footer-Wrap-->
-  <% include partials/footer.ejs %>
-  <!--End Footer-Wrap-->
 </div>
-
-
-<!--// BACK TO TOP //-->
+<% include partials/script_map.ejs %>
+<!--Footer-Wrap-->
+<% include partials/footer.ejs %>
+<!--End Footer-Wrap-->
+</div>
 <div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
-
 <!-- Libs -->
 <% include partials/include_scripts.ejs %>
-
-
 </body>
 </html>

@@ -20,36 +20,6 @@ module.exports = function (passport) {
         });
     });
 
-    /*  passport.use('local-signup', new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password',
-        passReqToCallback: true,
-      },
-      function(req, email, password, done) {
-        process.nextTick(function() {
-          User.findOne({ 'local.email':  email }, function(err, user) {
-            if (err)
-                return done(err);
-            if (user) {
-              return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
-              var newUser = new User();
-              newUser.local.email = email;
-              newUser.local.password = newUser.generateHash(password);
-              newUser.local.infoadd = "";
-              newUser.local.tasks = [];
-              newUser.save(function(err) {
-                if (err)
-                  throw err;
-                  console.log(newUser);
-                return done(null, newUser);
-              });
-            }
-          });
-        });
-      }));*/
-
-
     passport.use('local-signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
@@ -109,8 +79,8 @@ module.exports = function (passport) {
                                         port: 465,
                                         secure: true,
                                         auth: {
-                                            user: 'admin@we.guru',
-                                            pass: 'adminweguru1234'
+                                            user: 'startupmap@we.guru',
+                                            pass: 'startupmap2007'
                                         },
                                         tls: {
                                             // do not fail on invalid certs
@@ -120,7 +90,7 @@ module.exports = function (passport) {
                                     });
 
                                     var mailOptions = {
-                                        from: 'admin@we.guru',
+                                        from: 'startupmap@we.guru',
                                         to: email,
                                         subject: 'Account Verification Token',
                                         text: 'Hello,\n\n' + 'Please verify your account by clicking the link: <a href=" \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink + '/' + verification_token + '">.\n'
@@ -201,6 +171,7 @@ module.exports = function (passport) {
             });
         }));
 
+    
     passport.use(new TwitterStrategy({
             consumerKey: configAuth.twitterAuth.consumerKey,
             consumerSecret: configAuth.twitterAuth.consumerSecret,

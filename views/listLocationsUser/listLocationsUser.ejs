@@ -1,28 +1,229 @@
 <div id="listLocations">
-    <table v-if="userLocations">
-        <tr v-for="location in userLocations">
-            <td>{{location.name}}</td>
-            <td>{{location.category}}</td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="v-heading-v2">
+                <h3>Мои ранее добавленные точки</h3>
+            </div>
+            <table v-if="userLocations" class="table">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="location in userLocations">
+                    <td>{{location.name}}</td>
+                    <td>{{location.category}}</td>
+                    <td class="align-right">
+                        <button class="btn btn-success btn-sm" @click="udateDataModal(location.name)" data-toggle="modal"
+                                data-target="#myModal">редактировать
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Название </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="p-y-xs col-sm-6 col-xs-12">
+                                <input type="text" name="name" class="form-control" id="name_location"
+                                       placeholder="Название"
+                                       v-model="nowEditLocation.name" disabled>
+                            </div>
+                            <div class="p-y-xs col-sm-6 col-xs-12">
+                                <select class="form-control" id="category" required v-model="nowEditLocation.category">
+                                    <option value="" disabled selected hidden>Категория</option>
+                                    <option value="2">
+                                        Авто. Мото
+                                    </option>
+                                    <option value="3">
+                                        Бытовые услуги
+                                    </option>
+                                    <option value="4">
+                                        Еда
+                                    </option>
+                                    <option value="5">
+                                        Здоровье и спорт
+                                    </option>
+                                    <option value="6">
+                                        Интерьер
+                                    </option>
+                                    <option value="1">
+                                        Информационные технологии
+                                    </option>
+                                    <option value="7">
+                                        Коммерция
+                                    </option>
+                                    <option value="8">
+                                        Культура
+                                    </option>
+                                    <option value="9">
+                                        Логистика
+                                    </option>
+                                    <option value="10">
+                                        Мода и стиль
+                                    </option>
+                                    <option value="11">
+                                        Ноухау
+                                    </option>
+                                    <option value="12">
+                                        Образование
+                                    </option>
+                                    <option value="13">
+                                        Промышленное производство
+                                    </option>
+                                    <option value="14">
+                                        Развлечения. Отдых
+                                    </option>
+                                    <option value="15">
+                                        Сельское хозяйство
+                                    </option>
+                                    <option value="16">
+                                        Социальные проекты
+                                    </option>
+                                    <option value="17">
+                                        Строительство
+                                    </option>
+                                    <option value="18">
+                                        Туризм
+                                    </option>
+                                    <option value="19">
+                                        Финансы
+                                    </option>
+                                    <option value="20">
+                                        Экология
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="p-y-xs col-sm-6 col-xs-12">
+                                <select class="form-control" v-model="nowEditLocation.count_osnovatelei">
+                                    <option value="" disabled selected hidden>Кол-во основателей</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5 и более</option>
+                                </select>
+                            </div>
+                            <div class="p-y-xs col-sm-6 col-xs-12">
+                                <select class="form-control" v-model="nowEditLocation.step_project">
+                                    <option value="" disabled selected hidden>Стадия проекта</option>
+                                    <option>Идея</option>
+                                    <option>MVP\Beta</option>
+                                    <option>Недавно запустились</option>
+                                    <option>Активно развиваемся</option>
+                                    <option>Есть revenue, масштабируемся</option>
+                                </select>
+                            </div>
+                            <div class="p-y-xs col-sm-6 col-xs-12">
+                                <select class="form-control" v-model="nowEditLocation.need">
+                                    <option value="" disabled selected hidden>Что требуется</option>
+                                    <option>Деньги</option>
+                                    <option>Экспертиза</option>
+                                    <option>Инфраструктура</option>
+                                    <option>Сервисы</option>
+                                </select>
+                            </div>
+                            <div class="p-y-xs col-sm-6 col-xs-12">
+                                <input type="text" id="website" name="website" class="form-control"
+                                       placeholder="website" v-model="nowEditLocation.website">
+                            </div>
+                            <div class="col-xs-12 p-y-xs">
+                                        <textarea class="form-control resizeBoth" rows="3" id="textareaDefault"
+                                                  placeholder="От себя..." maxlength="300"
+                                                  v-model="nowEditLocation.dop_text"></textarea>
+                                <span class="grey">{{ this.nowEditLocation.dop_text.length }} из 300 символов</span>
+                            </div>
+
+                            <!--End Toggle-->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" @click="updateLocation">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script>
 
     var listLocation = new Vue({
         el: '#listLocations',
         data: {
             idUser: '<%= user ? user._id : '' %>',
-            userLocations: ''
+            userLocations: '',
+            nowEditLocation: {
+                name: '',
+                place: '',
+                category: '',
+                count_osnovatelei: '',
+                step_project: '',
+                need: '',
+                website: '',
+                dop_text: ''
+            }
         },
         mounted: function () {
             this.getUsersLocations();
         },
         methods: {
+            udateDataModal( nameLocationEdit ){
+                this.nowEditLocation = this.userLocations.find(function ( location ) {
+                    return location.name == nameLocationEdit
+                });
+            },
             getUsersLocations: function () {
                 this.$http.get('/getLocationsUser/' + this.idUser).then(function (response) {
                     this.$data.userLocations = response.body;
                 }, function (response) {
                     console.log(response);
+                });
+            },
+            updateLocation() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/changeLocation',
+                    crossDomain: true,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    data: {
+                        idUser: this.idUser,
+                        name: this.nowEditLocation.name,
+                        location_lat: this.nowEditLocation.place.lat,
+                        location_lng: this.nowEditLocation.place.lng,
+                        category: this.nowEditLocation.category,
+                        count_osnovatelei: this.nowEditLocation.count_osnovatelei,
+                        step_project: this.nowEditLocation.step_project,
+                        need: this.nowEditLocation.need,
+                        website: this.nowEditLocation.website,
+                        dop_text: this.nowEditLocation.dop_text
+                    },
+                    success: function (data, param1) {
+                        console.log(data, param1);
+                        listLocation.getUsers();
+                    },
+                    error: function (data, a, b) {
+                        console.log(data);
+                        console.log(a);
+                        console.log(b);
+                    }
                 });
             }
         }

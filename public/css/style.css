@@ -2091,6 +2091,7 @@ h4.v-line-heading:before {
 }
 
 .v-heading-v2 {
+    clear: both;
     display: block;
     margin-bottom: 25px;
     border-bottom: 1px dotted #e4e4e4;

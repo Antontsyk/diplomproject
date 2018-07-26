@@ -103,6 +103,9 @@ a.current{
     padding-bottom: 70px !important;
 }
 
+.resizeBoth{
+    resize: none !important;
+}
 
 .v-pagination li a:hover,
 ul.bar-styling li:not(.selected) > a:hover,

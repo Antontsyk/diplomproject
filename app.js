@@ -66,64 +66,45 @@ app.get('/verify/:permaink/:token', function (req, res) {
 });
 
 app.post('/setLocation', function (req, res) {
-    var isHaveRepeatName = false;
-    var nameThatRepeat = req.body.name;
-    User.find({}, function(err, users) {
-        console.log(users);
-        isHaveRepeatName = users.some(function(user) {
-            return user.local.locations.some(function (value) {
-                return value.name == nameThatRepeat;
-            });
-        });
-    });
-    console.log( isHaveRepeatName );
-    if( !isHaveRepeatName ){
-        var UserId = req.body.idUser;
-        var NewLocation = {
+    User.findById(req.body.idUser, function (err, user) {
+        if (err) return handleError(err);
+        user.local.locations.unshift({
             name: req.body.name,
-            place: { lat: req.body.location_lat, lng: req.body.location_lng },
+            place: {lat: req.body.location_lat, lng: req.body.location_lng},
             category: req.body.category,
             count_osnovatelei: req.body.count_osnovatelei,
             step_project: req.body.step_project,
             need: req.body.need,
             website: req.body.website,
             dop_text: req.body.dop_text
-
-        };
-        var user = '';
-        User.findById(UserId, function (err, user) {
-            user.local.locations.push(NewLocation);
-            user.save();
-            console.log(user.local.email);
-            user = (user);
         });
-
+        user.save(function (err) {
+            if(err) console.error(err);
+        });
         res.status(200).send('success');
-    }else{
-        res.status(400).send( ' Name already in list ' );
-    }
+    });
 });
 
 
 app.get('/getAllLocations', function (req, res) {
-    var locations = new Array();
-    User.find({}, function(err, users) {
+    User.find({}, function (err, users) {
         var userMap = {};
-
-        users.forEach(function(user) {
+        users.forEach(function (user) {
             userMap[user._id] = user.local.locations;
         });
-        res.status(200).json( userMap );
+        if (err) return handleError(err);
+        res.status(200).json(userMap);
     })
 });
 
 app.get('/getLocationsUser/:UserId', function (req, res) {
-    User.findById(req.params.UserId, function(err, user) {
-        res.status(200).json( user.local.locations );
+    User.findById(req.params.UserId, function (err, user) {
+        if (err) return handleError(err);
+        res.status(200).json(user.local.locations);
     })
 });
 
-app.post( '/changeLocation', function (req, res) {
+app.post('/changeLocation', function (req, res) {
     var UserId = req.body.idUser;
     var nameLocation = req.body.name;
     var category = req.body.category;
@@ -134,7 +115,16 @@ app.post( '/changeLocation', function (req, res) {
             "local.locations.name": nameLocation
         }, {
             $set: {
-                "local.locations.$.category": category
+                "local.locations.$": {
+                    name: req.body.name,
+                    place: {lat: req.body.location_lat, lng: req.body.location_lng},
+                    category: req.body.category,
+                    count_osnovatelei: req.body.count_osnovatelei,
+                    step_project: req.body.step_project,
+                    need: req.body.need,
+                    website: req.body.website,
+                    dop_text: req.body.dop_text
+                }
             }
         },
         function (err, tank) {
@@ -142,7 +132,7 @@ app.post( '/changeLocation', function (req, res) {
                 console.log(tank);
                 return handleError(err);
 
-            }else{
+            } else {
                 console.log(tank);
                 res.status(200).send('OK');
             }
@@ -172,7 +162,6 @@ app.post( '/changeLocation', function (req, res) {
     //res.render('tasks.ejs');     
     res.redirect('back');
 });*/
-
 
 
 require('./config/passport')(passport);

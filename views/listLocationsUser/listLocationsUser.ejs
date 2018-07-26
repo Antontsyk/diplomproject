@@ -1,4 +1,4 @@
-<div id="listLocations">
+<div id="listUserLocations">
     <div class="row">
         <div class="col-xs-12">
             <div class="v-heading-v2">
@@ -15,9 +15,10 @@
                 <tbody>
                 <tr v-for="location in userLocations">
                     <td>{{location.name}}</td>
-                    <td>{{location.category}}</td>
+                    <td>{{ selectCategoty(location.category) }}</td>
                     <td class="align-right">
-                        <button class="btn btn-success btn-sm" @click="udateDataModal(location.name)" data-toggle="modal"
+                        <button class="btn btn-success btn-sm" @click="udateDataModal(location.name)"
+                                data-toggle="modal"
                                 data-target="#myModal">редактировать
                         </button>
                     </td>
@@ -163,8 +164,8 @@
 
 <script>
 
-    var listLocation = new Vue({
-        el: '#listLocations',
+    var listUserLocations = new Vue({
+        el: '#listUserLocations',
         data: {
             idUser: '<%= user ? user._id : '' %>',
             userLocations: '',
@@ -183,8 +184,11 @@
             this.getUsersLocations();
         },
         methods: {
-            udateDataModal( nameLocationEdit ){
-                this.nowEditLocation = this.userLocations.find(function ( location ) {
+            selectCategoty: function (id) {
+                return window.selectCategoty(id);
+            },
+            udateDataModal(nameLocationEdit) {
+                this.nowEditLocation = this.userLocations.find(function (location) {
                     return location.name == nameLocationEdit
                 });
             },
@@ -216,7 +220,8 @@
                         dop_text: this.nowEditLocation.dop_text
                     },
                     success: function (data, param1) {
-                        console.log(data, param1);
+                        alert('Изменения сохранены!!!')
+                        $('#myModal').modal('hide');
                         listLocation.getUsers();
                     },
                     error: function (data, a, b) {

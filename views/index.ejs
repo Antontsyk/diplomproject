@@ -7,7 +7,6 @@
     <div class="fullwidthbanner-container" id="home">
         <% include partials/map.ejs %>
         <div class="container">
-            <div class="v-spacer col-sm-12 v-height-big"></div>
             <% include listLocationsUser/listLocationsUser.ejs %>
             <div class="v-spacer col-sm-12 v-height-big"></div>
             <% include partials/form_new_location.ejs %>
@@ -19,7 +18,6 @@
     <br>
     <div class="shadow-right"></div>
 </div>
-<% include partials/script_map.ejs %>
 <!--Footer-Wrap-->
 <% include partials/footer.ejs %>
 <!--End Footer-Wrap-->
@@ -27,5 +25,6 @@
 <div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
 <!-- Libs -->
 <% include partials/include_scripts.ejs %>
+<% include partials/script_map.ejs %>
 </body>
 </html>

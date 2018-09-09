@@ -75,12 +75,12 @@ module.exports = function (passport) {
                                 newUser.local.verify_token = verification_token;
                                 try {
                                     var transporter = nodemailer.createTransport({
-                                        host: 'smtp.yandex.ru',
+                                        host: '',
                                         port: 465,
                                         secure: true,
                                         auth: {
-                                            user: 'startupmap@we.guru',
-                                            pass: 'startupmap2007'
+                                            user: '',
+                                            pass: ''
                                         },
                                         tls: {
                                             // do not fail on invalid certs
@@ -90,7 +90,7 @@ module.exports = function (passport) {
                                     });
 
                                     var mailOptions = {
-                                        from: 'startupmap@we.guru',
+                                        from: '',
                                         to: email,
                                         subject: 'Account Verification Token',
                                         text: 'Hello,\n\n' + 'Please verify your account by clicking the link: <a href=" \nhttp:\/\/' + req.headers.host + '\/verify\/' + permalink + '/' + verification_token + '">.\n'
